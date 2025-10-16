@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>上海全晓得医疗科技有限公司</title>
+    <style>
+        /* chrome 和 safari  上海全晓得医疗科技有限公司*/
+        *::-webkit-scrollbar {
+            display: none;
+        }
+
+        /*.IE | Edge*/
+        * {
+            -ms-overflow-style: none;
+        }
+
+        /*firefox*/
+        * {
+            scrollbar-width: none;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0px;
+            padding: 0px;
+            background-color: #0F1527; /* 更改背景颜色为 #004080 */
+        }
+
+        .top {
+            width: 100%;
+            height: 50px;
+            text-align: center;
+            color: white; /* 更改文字颜色为白色 */
+            font-size: 18px;
+            font-family: SourceHanSansSC-regular;
+            word-wrap: break-word; /* 自动换行 */
+            overflow-wrap: break-word; /* 处理非空格字符的换行 */
+        }
+
+        .test {
+            width: 90%;
+            height: 90%;
+            text-align: left;
+            margin: auto;
+            position: absolute;
+            /*left: 604px;*/ /* 更改左边距为 604px */
+            /*top: 366px;*/ /* 更改顶部距离为 366px */
+            color: white; /* 更改文字颜色为白色 */
+            font-size: 16px;
+            font-family: SourceHanSansSC-regular;
+            word-wrap: break-word; /* 自动换行 */
+            overflow-wrap: break-word; /* 处理非空格字符的换行 */
+            margin-left: 46px;
+            margin-right: 46px;
+        }
+
+        .bottom {
+            width: 100%;
+            height: 100px;
+            text-align: center;
+            background-color: #191970;
+        }
+
+        .aherf {
+            text-decoration: none;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="top">上海全晓得医疗科技有限公司</div>
+    <div class="test">
+        <div>
+            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp        上海全晓得医疗科技有限公司专注于消化内镜智能诊疗系统的研发与产业化，致力于构建"软硬一体+人机协作"的国产AI内镜新范式。公司由来自复旦大学中山医院、剑桥大学与帝国理工的多学科核心团队联合创办，融合临床智慧与工程创新，打造具有全球领先水平的智能内镜解决方案。
+        </div>
+        <div style="margin-top: 30px">
+            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp        核心产品JOJO智能内镜AI系统已完成原型设计与临床测试，具备病灶识别、手术导航、质量控制、报告生成等多项功能，支持国产化、边缘部署与本地数据安全。公司以"推动智能内镜标准化、国产化"为使命，立足中国、面向国际，服务三级医院、内镜中心与医生个体，致力于打造一体化的人机合作智能医室。
+        </div>
+        <br /><br /><br />
+    </div>
+    <script>
+        window.addEventListener('mousewheel', function(event){
+        if (event.ctrlKey === true || event.metaKey) {
+            event.preventDefault();
+        }
+        },{ passive: false});
+
+        window.addEventListener('DOMMouseScroll', function(event){
+        if (event.ctrlKey === true || event.metaKey) {
+            event.preventDefault();
+        }
+        },{ passive: false});
+
+        document.addEventListener('keydown', function(e) {
+        e.preventDefault();
+        });
+
+        document.addEventListener('mousedown', function(e) {
+        if (e.button === 0 || e.button === 2) {
+            e.preventDefault();
+        }
+        });
+
+        document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        });
+    </script>
+</body>
+</html>
