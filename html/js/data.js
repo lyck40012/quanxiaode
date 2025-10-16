@@ -25,7 +25,7 @@ const mapping = {
     23: [69, 70],
 };
 let stomachColor = {
-    0: '#9A9A9A',
+    0: '#ffffff',
     1: '#0A8C3C',
     2: '#D07505',
     3: '#983511',
@@ -52,8 +52,8 @@ function compareObject(obj1, obj2) {
             upgradedAreas.push(key)
         }
     })
-    oldAreaObj = { ...obj2 }
-    return { result, upgradedAreas }
+    oldAreaObj = {...obj2}
+    return {result, upgradedAreas}
 }
 
 function getAreaLevels(dataArr) {
@@ -76,14 +76,14 @@ function getAreaLevels(dataArr) {
 }
 
 function isRenderArea(objx, stomachSvg) {
-    let { result, upgradedAreas } = compareObject(oldAreaObj, objx)
+    let {result, upgradedAreas} = compareObject(oldAreaObj, objx)
     if (Object.values(result).length) {
         for (const key in result) {
             let color = result[key];
             let regionArr = stomachSvg.querySelectorAll(`.cls-${key}`)
             if (regionArr.length) {
                 regionArr.forEach(x => {
-                    x.style.fill = stomachColor[color] || '#9a9a9a'
+                    x.style.fill = stomachColor[color] || '#fff'
                 })
             }
         }
@@ -108,7 +108,7 @@ function isRenderArea(objx, stomachSvg) {
                         let regionArr = stomachSvg.querySelectorAll(`.cls-${x}`)
                         if (regionArr.length) {
                             regionArr.forEach(m => {
-                                m.style.fill = '#9a9a9a'
+                                m.style.fill = '#fff'
                             })
                         }
                     })

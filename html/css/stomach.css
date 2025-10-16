@@ -119,15 +119,22 @@ border-radius: 50%;
 .main-content .left .area-status  .item:nth-child(2) .cirle{
   width: 18px;
 height: 18px;
-background: #2DAD83;
+background: #0A8C3C;
 border-radius: 50%;
 }
 .main-content .left .area-status  .item:nth-child(3) .cirle{
   width: 18px;
 height: 18px;
-background: #748CEF;
+background: #D07505;
 border-radius: 50%;
 }
+.main-content .left .area-status  .item:nth-child(4) .cirle{
+    width: 18px;
+    height: 18px;
+    background: #983511;
+    border-radius: 50%;
+}
+
 
 
 .main-content .right {
