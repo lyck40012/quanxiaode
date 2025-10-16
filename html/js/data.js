@@ -79,7 +79,6 @@ function isRenderArea(objx, stomachSvg) {
     if (Object.values(result).length) {
         for (const key in result) {
             let color = result[key] < 2 ? result[key] : 2;
-            console.log("color==>", color, result[key]);
             let regionArr = stomachSvg.querySelectorAll(`.cls-${key}`)
             if (regionArr.length) {
                 regionArr.forEach(x => {
@@ -91,16 +90,16 @@ function isRenderArea(objx, stomachSvg) {
             // 显示颜色
             setTimeout(() => {
                 upgradedAreas.forEach(x => {
+                    let color = result[x] < 2 ? result[x] : 2;
                     let regionArr = stomachSvg.querySelectorAll(`.cls-${x}`)
                     if (regionArr.length) {
                         regionArr.forEach(m => {
-                            m.style.fill = '#2DAD83'
+                            m.style.fill = stomachColor[color] || '#fff'
                         })
                     }
                 })
 
             }, repeat * 500)
-
             // 清除颜色（闪烁效果），但第三次不清除
             if (repeat < 2) {
                 setTimeout(() => {
@@ -117,6 +116,26 @@ function isRenderArea(objx, stomachSvg) {
         }
     } else {
 
+    }
+
+}
+
+
+
+function isRenderArea1(objx, stomachSvg) {
+    let { result, upgradedAreas } = compareObject(oldAreaObj, objx)
+    console.log("result==>", result);
+
+    if (Object.values(result).length) {
+        for (const key in result) {
+            let color = result[key] < 2 ? result[key] : 2;
+            let regionArr = stomachSvg.querySelectorAll(`.cls-${key}`)
+            if (regionArr.length) {
+                regionArr.forEach(x => {
+                    x.style.fill = stomachColor[color] || '#fff'
+                })
+            }
+        }
     }
 
 }
