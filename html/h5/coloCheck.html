@@ -73,10 +73,13 @@
         </div>
 
         <div class="speed-box">
-          <div class="label">目前速率3cm/s</div>
+          <div class="label">目前速率0cm/s</div>
           <div class="mark-box">
-            <img class="mark-icon" width="15" height="21" src="../image/coloCheck/icon-1.png" />
-            <div class="mark-text">慢速</div>
+            <div class="top">
+              <img class="mark-icon" width="15" height="21" src="../image/coloCheck/icon-1.png" />
+              <span class="mark-text">慢速</span>
+            </div>
+            <div class="mark"></div>
           </div>
           <img src="../image/coloCheck/speed-1.png" class="img speed-1-img" />
           <img src="../image/coloCheck/speed-2.png" class="img speed-2-img" />
@@ -122,6 +125,32 @@
     </div>
   </div>
   <script>
+    // 6：退镜速度 scopeWithdrawalSpeed （int）：（速度等级0~15，肠模型0~5: 绿色，5~10：黄色，10~15：红色）默认为 0；
+    // let scopeWithdrawalSpeed = 15; // 示例初始值
+    let markBox = document.querySelector('.mark-box');
+    let speedBoxLabel = document.querySelector('.speed-box .label');
+
+    function testSpeed(scopeWithdrawalSpeed) {
+      if (scopeWithdrawalSpeed <= 5) {
+        // 占比
+        let num = 150 / 5; // 0~15 对应 0~150px
+        let result = scopeWithdrawalSpeed * num;
+        markBox.style.width = `${395 - result}px`;
+      } else if (scopeWithdrawalSpeed > 5 && scopeWithdrawalSpeed <= 10) {
+        let num = 117 / 5; // 5~10 
+        let result = scopeWithdrawalSpeed * num;
+        markBox.style.width = `${395 - result - 40}px`;
+      } else if (scopeWithdrawalSpeed > 10 && scopeWithdrawalSpeed <= 15) {
+        let num = 117 / 5; // 5~10 
+        let result = scopeWithdrawalSpeed * num;
+        markBox.style.width = `${395 - result - 44}px`;
+      }
+      speedBoxLabel.innerHTML = `目前速率${scopeWithdrawalSpeed || 0}cm/s`;
+    }
+    setInterval(() => {
+      let randomSpeed = Math.floor(Math.random() * 16);
+      testSpeed(randomSpeed);
+    }, 1000);
     const wsClient = createWebSocketClient({
       url: '/intestinal',
     });
@@ -200,8 +229,6 @@
       statusItem3.style.opacity = result.lensBlurStatus === 1 ? 1 : 0.5;
 
     });
-    InteractionLock.disable()
-    // InteractionLock.enable()
   </script>
 </body>
 

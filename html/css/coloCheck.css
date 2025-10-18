@@ -110,13 +110,14 @@ body {
   font-size: 18px;
   color: #FFFFFF;
   margin-right: 12px;
+  width: 140px;
 }
 
 .main-content .colo-box .speed-box .img {
   height: 29px;
-  margin-left: 5px;
+  margin-right: 5px;
   background-color: rgba(0, 0, 0, 0);
-  opacity: 0.5;
+  /* opacity: 0.5; */
 }
 
 .main-content .colo-box .speed-box .speed-1-img {
@@ -131,19 +132,31 @@ body {
 
 
 .main-content .colo-box .speed-box .mark-box {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  width: 404px;
   position: absolute;
-  left: 150px;
-  top: -26px;
+  right: 15px;
+  top: -30px;
+  transition: left 0.5s ease;
 }
 
-.main-content .colo-box .speed-box .mark-box .mark-text {
+.main-content .colo-box .speed-box .mark-box .top {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
   font-weight: 600;
   font-size: 18px;
   color: #FFFFFF;
+  white-space: nowrap;
+  margin-left: -8px;
 }
+
+.main-content .colo-box .speed-box .mark-box .mark {
+  height: 30px;
+  margin-top: 12px;
+  background-color: rgba(16, 21, 39, 0.6);
+}
+
 
 
 
