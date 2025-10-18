@@ -232,6 +232,7 @@ body {
   background-color: #301A1B;
   border-radius: 16px 16px 16px 16px;
   border: 1px solid rgba(143, 127, 180, 0.2);
+  display: none;
 }
 
 .screen-right .right-content .top-box .status-box .colo-status {

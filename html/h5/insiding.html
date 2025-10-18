@@ -1,45 +1,47 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>医疗质控系统</title>
-    <script src="../js/prohibit.js"></script>
+  <script src="../js/prohibit.js"></script>
   <link rel="stylesheet" href="../css/intoTheMirror.css">
 </head>
+
 <body>
-<div class="container">
-  <img class="intoTheMirror" src="../image/intoTheMirror.png" alt="">
-  <div class="title">进镜中...</div>
-  <div class="time">00:00:00</div>
-</div>
+  <div class="container">
+    <img class="intoTheMirror" src="../image/intoTheMirror.png" alt="">
+    <div class="title">进镜中...</div>
+    <div class="time">00:00:00</div>
+  </div>
 
 </body>
 <script>
-// 页面加载时开始计时
-let startTime = Date.now();
-let timeElement = document.querySelector('.time');
+  // 页面加载时开始计时
+  let startTime = Date.now();
+  let timeElement = document.querySelector('.time');
 
-// 格式化时间显示函数
-function formatTime(seconds) {
-  const minutes = Math.floor(seconds / 60);
-  const remainingSeconds = seconds % 60;
-  return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
-}
+  // 格式化时间显示函数
+  function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+  }
 
-// 更新时间显示
-function updateTime() {
-  const currentTime = Date.now();
-  const elapsedSeconds = Math.floor((currentTime - startTime) / 1000);
-  timeElement.textContent = `00:${formatTime(elapsedSeconds)}`;
-}
+  // 更新时间显示
+  function updateTime() {
+    const currentTime = Date.now();
+    const elapsedSeconds = Math.floor((currentTime - startTime) / 1000);
+    timeElement.textContent = `00:${formatTime(elapsedSeconds)}`;
+  }
 
-// 每秒更新一次时间
-setInterval(updateTime, 1000);
+  // 每秒更新一次时间
+  setInterval(updateTime, 1000);
 
-// 页面加载完成后立即更新一次
-document.addEventListener('DOMContentLoaded', updateTime);
-  InteractionLock.disable()
-  // InteractionLock.enable()
+  // 页面加载完成后立即更新一次
+  document.addEventListener('DOMContentLoaded', updateTime);
+
 </script>
+
 </html>

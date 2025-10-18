@@ -22,7 +22,7 @@
                 <div class="left">
                     <div class="timeBox">
                         <div class="label">手术时间</div>
-                        <div class="time examinationTotalDuration">00:00:00</div>
+                        <div class="time examinationTotalDuration"></div>
                     </div>
                     <?xml version="1.0" encoding="UTF-8"?>
                     <svg id="stomach-svg" data-name="图层 1" width="270" xmlns="http://www.w3.org/2000/svg"
@@ -309,7 +309,6 @@
         }
         statusItem.style.display = result.isSurgicalInstrumentUsed === 1 ? 'block' : 'none';
         let areaLevels = getAreaLevels(result.regionAttentionLevels)
-        // isChangeColor(result.regionAttentionLevels)
 
 
         isRenderArea(areaLevels, stomachSvg)
@@ -330,49 +329,6 @@
         }
 
     })
-    // 数据是否变化
-    function isDataEqaual(newArr) {
-        if (!Array.isArray(newArr)) return false;
-        if (!oldData) {
-            oldData = [...newArr];
-            return false;
-        }
-        const isEqual = newArr.length === oldData.length &&
-            newArr.every((val, idx) => val === oldData[idx]);
-        oldData = [...newArr];
-        return isEqual;
-    }
-
-    function isChangeColor(arr) {
-        if (!isDataEqaual(arr)) {
-            console.log('发生了变化');
-            for (let repeat = 0; repeat < 3; repeat++) {
-                // 显示颜色
-                setTimeout(() => {
-                    arr?.forEach((x, i) => {
-                        let region = stomachSvg.querySelector(`.cls-${i}`)
-                        if (region) region.style.fill = stomachColor[x] || '#fff'
-                    })
-                }, repeat * 500)
-
-                // 清除颜色（闪烁效果），但第三次不清除
-                if (repeat < 2) {
-                    setTimeout(() => {
-                        arr?.forEach((x, i) => {
-                            let region = stomachSvg.querySelector(`.cls-${i}`)
-                            if (region) region.style.fill = ''
-                        })
-
-                    }, repeat * 500 + 250)
-                }
-            }
-
-        } else {
-        }
-    }
-    InteractionLock.disable()
-    // InteractionLock.enable()
-
 </script>
 
 </html>
