@@ -131,6 +131,7 @@
     let speedBoxLabel = document.querySelector('.speed-box .label');
 
     function testSpeed(scopeWithdrawalSpeed) {
+      if (scopeWithdrawalSpeed > 15) scopeWithdrawalSpeed = 15;
       if (scopeWithdrawalSpeed <= 5) {
         // 占比
         let num = 150 / 5; // 0~15 对应 0~150px
@@ -141,16 +142,19 @@
         let result = scopeWithdrawalSpeed * num;
         markBox.style.width = `${395 - result - 40}px`;
       } else if (scopeWithdrawalSpeed > 10 && scopeWithdrawalSpeed <= 15) {
+
         let num = 117 / 5; // 5~10 
         let result = scopeWithdrawalSpeed * num;
         markBox.style.width = `${395 - result - 44}px`;
       }
       speedBoxLabel.innerHTML = `目前速率${scopeWithdrawalSpeed || 0}cm/s`;
     }
+    testSpeed(4);
+
     setInterval(() => {
-      let randomSpeed = Math.floor(Math.random() * 16);
-      testSpeed(randomSpeed);
-    }, 1000);
+      let randomSpeed = Math.floor(Math.random() * 20);
+      // testSpeed(randomSpeed);
+    }, 500);
     const wsClient = createWebSocketClient({
       url: '/intestinal',
     });
@@ -175,7 +179,6 @@
     wsClient.on('message', (data) => {
       if (!isJSON(data)) return
       let result = JSON.parse(data)
-      console.log("result=====>", result);
 
       if (result.messageType == 1001) return
       // console.log('已连接到服务器', result);
