@@ -64,8 +64,6 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: 15px;
-    padding: 15px;
     height: calc(100% - 54px);
     overflow: auto;
     background: #0F1527;
@@ -75,6 +73,12 @@ body {
     box-sizing: border-box;
 }
 
+.screen-left-top .top-box .img-item {
+    width: 25%;
+    height: fit-content;
+    object-fit: cover;
+    /* 保持图片比例 */
+}
 
 .screen-left-top .top-box::-webkit-scrollbar {
     width: 8px;
@@ -92,13 +96,6 @@ body {
     background: #0f1528;
 }
 
-.screen-left-top .top-box .img-item {
-    width: calc(33.333% - 10px);
-    /* 一行三个，减去间距 */
-    height: fit-content;
-    object-fit: cover;
-    /* 保持图片比例 */
-}
 
 .screen-left-bottom {
     width: 100%;
@@ -131,8 +128,6 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: 15px;
-    padding: 15px;
     overflow-y: auto;
     height: calc(100% - 54px);
     background: #0F1527;
@@ -142,6 +137,13 @@ body {
     box-sizing: border-box;
 }
 
+.screen-left-bottom .top-box .img-item {
+    width: 25%;
+    /* 一行三个，减去间距 */
+    height: fit-content;
+    object-fit: cover;
+    /* 保持图片比例 */
+}
 
 .screen-left-bottom .top-box::-webkit-scrollbar {
     width: 8px;
@@ -158,13 +160,7 @@ body {
     background: #0e1321;
 }
 
-.screen-left-bottom .top-box .img-item {
-    width: calc(33.333% - 10px);
-    /* 一行三个，减去间距 */
-    height: fit-content;
-    object-fit: cover;
-    /* 保持图片比例 */
-}
+
 
 
 .screen-right {
@@ -259,15 +255,33 @@ body {
     border: 2px solid #1C2236;
     display: flex;
     flex-direction: column;
-    gap: 44px;
     justify-content: center;
     align-items: center;
     height: calc(100% - 63px);
     margin-top: 8px;
+    overflow-y: auto;
 }
 
 .screen-right .right-content .content-right .list-box .item {
     font-weight: 600;
     font-size: 24px;
     color: #FFFFFF;
+    margin-top: 40px;
+}
+
+
+
+.screen-right .right-content .content-right .list-box::-webkit-scrollbar {
+    width: 8px;
+}
+
+.screen-right .right-content .content-right .list-box::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    background: #A2AFCD;
+}
+
+.screen-right .right-content .content-right .list-box::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background: #0e1321;
 }
