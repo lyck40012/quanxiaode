@@ -129,32 +129,34 @@
     // let scopeWithdrawalSpeed = 15; // 示例初始值
     let markBox = document.querySelector('.mark-box');
     let speedBoxLabel = document.querySelector('.speed-box .label');
-
+    let markIcon = document.querySelector('.mark-icon');
     function testSpeed(scopeWithdrawalSpeed) {
       if (scopeWithdrawalSpeed > 15) scopeWithdrawalSpeed = 15;
       if (scopeWithdrawalSpeed <= 5) {
-        // 占比
-        let num = 150 / 5; // 0~15 对应 0~150px
+        markIcon.src = '../image/coloCheck/icon-1.png';
+        let num = 150 / 5; // 0~15 对应
         let result = scopeWithdrawalSpeed * num;
         markBox.style.width = `${395 - result}px`;
       } else if (scopeWithdrawalSpeed > 5 && scopeWithdrawalSpeed <= 10) {
+        markIcon.src = '../image/coloCheck/icon-2.png';
+
         let num = 117 / 5; // 5~10 
         let result = scopeWithdrawalSpeed * num;
         markBox.style.width = `${395 - result - 40}px`;
       } else if (scopeWithdrawalSpeed > 10 && scopeWithdrawalSpeed <= 15) {
-
+        markIcon.src = '../image/coloCheck/icon-3.png'
         let num = 117 / 5; // 5~10 
         let result = scopeWithdrawalSpeed * num;
         markBox.style.width = `${395 - result - 44}px`;
       }
       speedBoxLabel.innerHTML = `目前速率${scopeWithdrawalSpeed || 0}cm/s`;
     }
-    testSpeed(12);
+    // testSpeed(8);
 
-    setInterval(() => {
-      let randomSpeed = Math.floor(Math.random() * 20);
-      // testSpeed(randomSpeed);
-    }, 500);
+    // setInterval(() => {
+    //   let randomSpeed = Math.floor(Math.random() * 20);
+    //   testSpeed(randomSpeed);
+    // }, 500);
     const wsClient = createWebSocketClient({
       url: '/intestinal',
     });
@@ -191,7 +193,7 @@
       }
       // 肠svg
       cls1.style.fill = result.isIleocecalValveReached === 1 ? '#4090EC' : '#fff'
-
+      testSpeed(result.scopeWithdrawalSpeed);
       // 肠模型除了回盲瓣颜色
       if (result.scopeWithdrawalSpeed > 1 && result.scopeWithdrawalSpeed < 6) {
         cls2.style.fill = '#32b181'
