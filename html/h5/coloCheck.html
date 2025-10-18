@@ -33,15 +33,15 @@
                         }
                         
                         .cls-2 {
-                        fill: #088D11;
+                        fill: #32b181;
                         }
                         
                         .cls-3 {
-                        fill: #D07505;
+                        fill: #7f59ee;
                         }
                         
                         .cls-4 {
-                        fill: #983511;
+                        fill: #f770001;
                         } -->
         <div class="colo-svg">
           <?xml version="1.0" encoding="UTF-8"?>
@@ -149,7 +149,7 @@
       }
       speedBoxLabel.innerHTML = `目前速率${scopeWithdrawalSpeed || 0}cm/s`;
     }
-    testSpeed(4);
+    testSpeed(12);
 
     setInterval(() => {
       let randomSpeed = Math.floor(Math.random() * 20);
@@ -194,17 +194,17 @@
 
       // 肠模型除了回盲瓣颜色
       if (result.scopeWithdrawalSpeed > 1 && result.scopeWithdrawalSpeed < 6) {
-        cls2.style.fill = '#088D11'
-        cls3.style.fill = '#088D11'
-        cls4.style.fill = '#088D11'
+        cls2.style.fill = '#32b181'
+        cls3.style.fill = '#32b181'
+        cls4.style.fill = '#32b181'
       } else if (result.scopeWithdrawalSpeed > 6 && result.scopeWithdrawalSpeed < 10) {
-        cls2.style.fill = '#D07505'
-        cls3.style.fill = '#D07505'
-        cls4.style.fill = '#D07505'
+        cls2.style.fill = '#7f59ee'
+        cls3.style.fill = '#7f59ee'
+        cls4.style.fill = '#7f59ee'
       } else if (result.scopeWithdrawalSpeed > 10 && result.scopeWithdrawalSpeed < 15) {
-        cls2.style.fill = '#983511'
-        cls3.style.fill = '#983511'
-        cls4.style.fill = '#983511'
+        cls2.style.fill = '#f770001'
+        cls3.style.fill = '#f770001'
+        cls4.style.fill = '#f770001'
       } else {
         cls2.style.fill = '#ffffff'
         cls3.style.fill = '#ffffff'
