@@ -91,39 +91,6 @@
           <div class="value recoveryTime"></div>
         </div>
       </div>
-
-
-
-
-      <!-- <div class="screen-right-bottom">
-        <div class="heard">手术指标</div>
-        <div class="content">
-          <div class="box">
-            <div class="item">
-              <div class="label">总手术时间</div>
-              <div class="value"></div>
-            </div>
-            <div class="item">
-              <div class="label">进镜时间</div>
-              <div class="value"></div>
-            </div>
-            <div class="item">
-              <div class="label">退镜时间</div>
-              <div class="value"></div>
-            </div>
-          </div>
-          <div class="time-info">
-            <div class="item">
-              <div class="label">提醒吸附粪水次数</div>
-              <div class="value sewage">0</div>
-            </div>
-            <div class="item">
-              <div class="label">提醒退镜过快次数</div>
-              <div class="value withdrawQuickly">0</div>
-            </div>
-          </div>
-        </div>
-      </div> -->
     </div>
   </div>
 </body>
@@ -135,7 +102,7 @@
   let fileList = ['回盲部'];
   let sortUrl = fileName.split('_')[0]
   let baseUrl = `http://127.0.0.1:8080`;
-  let imgUrl = `${baseUrl}/scopeai_data/data/${sortUrl}`;
+  let imgUrl = `${baseUrl}/user/data/${sortUrl}`;
 
 
   function renderLocationImages(selectedImages) {
@@ -230,7 +197,7 @@
     return h * 3600 + m * 60 + s;
   }
   async function loadTimeData() {
-    let first1 = document.querySelector('.totalTime')
+    let totalTime = document.querySelector('.totalTime')
     let insertionTime = document.querySelector('.insertionTime')
     let recoveryTime = document.querySelector('.recoveryTime')
     totalTime.textContent = '-';
@@ -263,7 +230,7 @@
           cls4.style.fill = '#ffffff';
           statusBox.style.display = 'block';
           coloStatus.textContent = '检测到回盲部，退镜不足6分钟未达到质控标准';
-          statusIcon.src = '../images/warning-icon.png'
+          statusIcon.src = '../image/warning-icon.png'
         } else if ((seconds >= 6 * 60)) {
           cls1.style.fill = '#0BCAA4';
           cls2.style.fill = '#0BCAA4';
@@ -271,12 +238,12 @@
           cls4.style.fill = '#0BCAA4';
           coloStatus.textContent = '检测到回盲部，退镜超过6分钟达到质控标准';
           statusBox.style.display = 'block';
-          statusIcon.src = '../images/finish-icon.png'
+          statusIcon.src = '../image/finish-icon.png'
         }
       } else {
         statusBox.style.display = 'block';
         coloStatus.textContent = '未识别到回盲部，无法统计质控标准';
-        statusIcon.src = '../images/warning-icon.png'
+        statusIcon.src = '../image/warning-icon.png'
         cls1.style.fill = '#ffffff';
         cls2.style.fill = '#ffffff';
         cls3.style.fill = '#ffffff';

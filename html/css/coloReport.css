@@ -65,8 +65,6 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: 15px;
-  padding: 15px;
   height: calc(100% - 54px);
   overflow: auto;
   background: #0F1527;
@@ -74,6 +72,12 @@ body {
   border: 2px solid #262F4F;
   margin-top: 7px;
   box-sizing: border-box;
+}
+
+.screen-left-top .top-box .img-item {
+  width: 25%;
+  height: fit-content;
+  object-fit: cover;
 }
 
 .screen-left-top .top-box::-webkit-scrollbar {
@@ -92,13 +96,6 @@ body {
   background: #0f1528;
 }
 
-.screen-left-top .top-box .img-item {
-  width: calc(33.333% - 10px);
-  /* 一行三个，减去间距 */
-  height: fit-content;
-  object-fit: cover;
-  /* 保持图片比例 */
-}
 
 .screen-left-bottom {
   width: 100%;
@@ -131,8 +128,6 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: 15px;
-  padding: 15px;
   overflow-y: auto;
   height: calc(100% - 54px);
   background: #0F1527;
@@ -140,6 +135,12 @@ body {
   border: 2px solid #262F4F;
   margin-top: 7px;
   box-sizing: border-box;
+}
+
+.screen-left-bottom .top-box .img-item {
+  width: 25%;
+  height: fit-content;
+  object-fit: cover;
 }
 
 .screen-left-bottom .top-box::-webkit-scrollbar {
@@ -162,15 +163,6 @@ body {
 
 
 
-
-
-.screen-left-bottom .top-box .img-item {
-  width: calc(33.333% - 10px);
-  /* 一行三个，减去间距 */
-  height: fit-content;
-  object-fit: cover;
-  /* 保持图片比例 */
-}
 
 
 .screen-right {
