@@ -204,12 +204,12 @@ body {
 }
 
 .screen-right .right-content .content-left .time-box {
+    width: 340px;
     background: #0C121F;
     border-radius: 16px 16px 16px 16px;
     border: 2px solid #1C2236;
     display: flex;
     align-items: center;
-    width: fit-content;
     padding: 8px;
     margin-top: 25px;
 }
@@ -227,6 +227,7 @@ body {
     margin-right: 16px;
     height: 52px;
     box-sizing: border-box;
+    text-align: center;
 }
 
 .screen-right .right-content .content-left .time-box .value {

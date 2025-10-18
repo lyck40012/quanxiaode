@@ -14,29 +14,41 @@
   <div class="container">
     <div class="screen-left">
       <div class="screen-left-top">
-        <div class="heard">病灶截图</div>
+        <div class="heard-box">
+          <div class="title-icon"><img src="../image/img-icon.png" width="24" height="24" />
+          </div>
+          <span>病灶截图</span>
+        </div>
         <div class="top-box">
-
         </div>
       </div>
       <div class="screen-left-bottom">
-        <div class="heard">部位截图</div>
-        <div class="top-box">
-
+        <div class="heard-box">
+          <div class="title-icon"><img src="../image/img-icon.png" width="24" height="24" />
+          </div>
+          <span>部位截图</span>
         </div>
-        <div class="desc-box">
-          <div class="label">检测病灶：</div>
-          <div class="value"> </div>
-        </div>
+        <div class="top-box"> </div>
       </div>
     </div>
+
+
     <div class="screen-right">
-      <div class="screen-right-top">
-        <div class="screen-right-top-box">
-          <div class="heard">部位截图</div>
+      <div class="heard-box">
+        <img src="../image/qualityControl.png" width="48" height="48" />
+        <span>质控区域</span>
+      </div>
+      <div class="right-content">
+        <div class="top-box">
+          <div class="status-box-content">
+            <div class="status-box">
+              <img class="status-icon" src="../image/warning-icon.png" width="41" height="41" alt="">
+              <div class="colo-status"></div>
+            </div>
+          </div>
           <div class="img-svg">
             <?xml version="1.0" encoding="UTF-8"?>
-            <svg xmlns="http://www.w3.org/2000/svg" width="445" height="396" viewBox="0 0 756.75 730.69">
+            <svg xmlns="http://www.w3.org/2000/svg" width="364" viewBox="0 0 756.75 730.69">
               <defs>
                 <style>
                   .cls-255 {
@@ -44,7 +56,7 @@
                   }
 
                   .cls-bg {
-                    fill: #9a9a9a;
+                    fill: #0d121f;
                   }
                 </style>
               </defs>
@@ -61,46 +73,63 @@
               <path class="cls-255 cls-1"
                 d="M173.32,413.49c4.26,8.22,8.06,16.65,10.28,25.7,5.01,20.45,6.77,59.18-8.02,75.96-9.43,10.7-28.52,8.99-30.02,27.75-1.86,23.25,29.51,27.34,24.21,50.83l-5.49,13.47c1.47-9.97,3.28-17.37-1.98-26.63s-23.37-22.36-34.54-23.23c-8.17-.64-14.4,3.35-22.12,3.98-34.02,2.78-59.8-22.58-68.82-53.51-4.13-14.18-4.11-27.24-1.12-41.64,49,2.69,94.73-14.27,130.85-46.73,1-.9,5.94-6.57,6.78-5.95Z" />
             </svg>
-            <div class="status"></div>
+
           </div>
         </div>
 
+
+        <div class="time-box">
+          <div class="label">总手术时间</div>
+          <div class="value totalTime"></div>
+        </div>
+        <div class="time-box">
+          <div class="label">进镜时间</div>
+          <div class="value insertionTime"></div>
+        </div>
+        <div class="time-box">
+          <div class="label">退镜时间</div>
+          <div class="value recoveryTime"></div>
+        </div>
       </div>
-      <div class="screen-right-bottom">
+
+
+
+
+      <!-- <div class="screen-right-bottom">
         <div class="heard">手术指标</div>
-       <div class="content">
-            <div class="box">
-          <div class="item">
-            <div class="label">总手术时间</div>
-            <div class="value"></div>
-          </div>
-          <div class="item">
-            <div class="label">进镜时间</div>
-            <div class="value"></div>
-          </div>
-          <div class="item">
-            <div class="label">退镜时间</div>
-            <div class="value"></div>
-          </div>
-        </div>
-        <div class="time-info">
-         <div class="item">
-            <div class="label">提醒吸附粪水次数</div>
-            <div class="value sewage">0</div>
-          </div>
+        <div class="content">
+          <div class="box">
             <div class="item">
-            <div class="label">提醒退镜过快次数</div>
-            <div class="value withdrawQuickly">0</div>
+              <div class="label">总手术时间</div>
+              <div class="value"></div>
+            </div>
+            <div class="item">
+              <div class="label">进镜时间</div>
+              <div class="value"></div>
+            </div>
+            <div class="item">
+              <div class="label">退镜时间</div>
+              <div class="value"></div>
+            </div>
+          </div>
+          <div class="time-info">
+            <div class="item">
+              <div class="label">提醒吸附粪水次数</div>
+              <div class="value sewage">0</div>
+            </div>
+            <div class="item">
+              <div class="label">提醒退镜过快次数</div>
+              <div class="value withdrawQuickly">0</div>
+            </div>
           </div>
         </div>
-       </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </body>
 <script>
   // 肠镜检查的URL和参数配置
- let url = window.location.href
+  let url = window.location.href
   const params = new URL(url).searchParams;
   const fileName = params.get("patientId");
   let fileList = ['回盲部'];
@@ -201,18 +230,20 @@
     return h * 3600 + m * 60 + s;
   }
   async function loadTimeData() {
-    let first1 = document.querySelector('.item:nth-child(1) .value')
-    let second1 = document.querySelector('.item:nth-child(2) .value')
-    let third1 = document.querySelector('.item:nth-child(3) .value')
-    first1.textContent = '-';
-    second1.textContent = '-';
-    third1.textContent = '-';
+    let first1 = document.querySelector('.totalTime')
+    let insertionTime = document.querySelector('.insertionTime')
+    let recoveryTime = document.querySelector('.recoveryTime')
+    totalTime.textContent = '-';
+    insertionTime.textContent = '-';
+    recoveryTime.textContent = '-';
     try {
       const response = await fetch(`${imgUrl}/${fileName}/UserInfo.json`);
       const data = await response.json();
-      console.log("JSON数据",data);
-      
-      let status = document.querySelector('.screen-right-top .screen-right-top-box .status');
+      console.log("JSON数据", data);
+
+      let coloStatus = document.querySelector('.colo-status');
+      let statusBox = document.querySelector('.status-box');
+      let statusIcon = document.querySelector('.status-icon');
       //肠svg
       let cls1 = document.querySelector('.cls-1')
       let cls2 = document.querySelector('.cls-2')
@@ -222,23 +253,30 @@
       cls2.style.fill = "#ffffff"
       cls3.style.fill = "#ffffff"
       cls4.style.fill = "#ffffff"
-      status.textContent = ''
+      coloStatus.textContent = ''
       const seconds = toSeconds(data?.examinationRegionsTime?.withdrawalDuration);
       if (data?.examinationRegionsChinese.includes('回盲部')) {
-        cls1.style.fill = '#4090EC';
+        cls1.style.fill = '#748CEF';
         if (seconds < 6 * 60) {
           cls2.style.fill = '#ffffff';
           cls3.style.fill = '#ffffff';
           cls4.style.fill = '#ffffff';
-          status.textContent = '检测到回盲部，退镜检查小于6分钟';
+          statusBox.style.display = 'block';
+          coloStatus.textContent = '检测到回盲部，退镜不足6分钟未达到质控标准';
+          statusIcon.src = '../images/warning-icon.png'
         } else if ((seconds >= 6 * 60)) {
-          cls2.style.fill = '#4090EC';
-          cls3.style.fill = '#4090EC';
-          cls4.style.fill = '#4090EC';
-          status.textContent = '检测到回盲部，退镜检查大于6分钟';
+          cls1.style.fill = '#0BCAA4';
+          cls2.style.fill = '#0BCAA4';
+          cls3.style.fill = '#0BCAA4';
+          cls4.style.fill = '#0BCAA4';
+          coloStatus.textContent = '检测到回盲部，退镜超过6分钟达到质控标准';
+          statusBox.style.display = 'block';
+          statusIcon.src = '../images/finish-icon.png'
         }
       } else {
-        status.textContent = '未检测到回盲部';
+        statusBox.style.display = 'block';
+        coloStatus.textContent = '未识别到回盲部，无法统计质控标准';
+        statusIcon.src = '../images/warning-icon.png'
         cls1.style.fill = '#ffffff';
         cls2.style.fill = '#ffffff';
         cls3.style.fill = '#ffffff';
@@ -246,23 +284,9 @@
       }
 
 
-      first1.textContent = data?.examinationTotalDuration || '-';
-      second1.textContent = data?.examinationRegionsTime?.insertionDuration || '-';
-      third1.textContent = data?.examinationRegionsTime?.withdrawalDuration || '-';
-      let descBox = document.querySelector('.desc-box .value')
-      descBox.textContent = ''
-      data?.lesionChinese.forEach(x => {
-        let span = document.createElement('span')
-        span.textContent = x
-        descBox.appendChild(span)
-      })
-
-let sewage = document.querySelector('.sewage')
-let withdrawQuickly = document.querySelector('.withdrawQuickly')
-
-sewage.textContent = data?.coloVisual?.fecalResidueStatusCount || 0;
-withdrawQuickly.textContent = data?.coloVisual?.isRapidWithdrawalCount || 0;
-
+      totalTime.textContent = data?.examinationTotalDuration || '-';
+      insertionTime.textContent = data?.examinationRegionsTime?.insertionDuration || '-';
+      recoveryTime.textContent = data?.examinationRegionsTime?.withdrawalDuration || '-';
     } catch (error) {
       console.error('读取时间数据失败:', error);
     }

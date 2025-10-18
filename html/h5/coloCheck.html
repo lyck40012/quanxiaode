@@ -21,11 +21,11 @@
         <div class="top-box">
           <div class="time-box">
             <div class="label">进镜时长</div>
-            <div class="time closeUpTime">00:00:00</div>
+            <div class="time closeUpTime"></div>
           </div>
           <div class="time-box">
             <div class="label">退镜时长</div>
-            <div class="time withdrawalTime">00:00:00</div>
+            <div class="time withdrawalTime"></div>
           </div>
         </div>
         <!-- .cls-1 {
@@ -130,7 +130,7 @@
     let markIcon = document.querySelector('.mark-icon');
     function testSpeed(scopeWithdrawalSpeed) {
       if (scopeWithdrawalSpeed > 15) scopeWithdrawalSpeed = 15;
-      if (scopeWithdrawalSpeed <= 5) {
+      if (scopeWithdrawalSpeed > 0 && scopeWithdrawalSpeed <= 5) {
         markIcon.src = '../image/coloCheck/icon-1.png';
         let num = 150 / 5; // 0~15 对应
         let result = scopeWithdrawalSpeed * num;
