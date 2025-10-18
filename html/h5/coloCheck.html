@@ -125,8 +125,6 @@
     </div>
   </div>
   <script>
-    // 6：退镜速度 scopeWithdrawalSpeed （int）：（速度等级0~15，肠模型0~5: 绿色，5~10：黄色，10~15：红色）默认为 0；
-    // let scopeWithdrawalSpeed = 15; // 示例初始值
     let markBox = document.querySelector('.mark-box');
     let speedBoxLabel = document.querySelector('.speed-box .label');
     let markIcon = document.querySelector('.mark-icon');
@@ -151,6 +149,7 @@
       }
       speedBoxLabel.innerHTML = `目前速率${scopeWithdrawalSpeed || 0}cm/s`;
     }
+
     // testSpeed(8);
 
     // setInterval(() => {
@@ -187,7 +186,6 @@
       closeUpTime.innerHTML = result.scopeInsertionDuration || '00:00:00'
       withdrawalTime.innerHTML = result.scopeWithdrawalDuration || '00:00:00'
       if (result.ldImagePath) {
-
         smallPlaceholder.src = 'http://127.0.0.1:8080/scopeai_data/' + result.ldImagePath
         img.style.backgroundColor = '#000000'
       }
