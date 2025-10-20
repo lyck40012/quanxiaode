@@ -78,7 +78,7 @@
             <div class="top-content">
               <div class="top">
                 <img class="mark-icon" width="15" height="21" src="../image/coloCheck/icon-1.png" />
-                <span class="mark-text">慢速</span>
+                <span class="mark-text">匀速</span>
               </div>
             </div>
             <div class="mark"></div>
@@ -134,30 +134,37 @@
     let speedBoxLabel = document.querySelector('.speed-box .label');
     let markIcon = document.querySelector('.mark-icon');
     let markContent = document.querySelector('.mark-box .top')
+    let markText = document.querySelector('.mark-text')
+
     function testSpeed(scopeWithdrawalSpeed) {
       markContent.style.display = scopeWithdrawalSpeed ? 'flex' : 'none'
+
       if (scopeWithdrawalSpeed > 15) scopeWithdrawalSpeed = 15;
       if (scopeWithdrawalSpeed > 0 && scopeWithdrawalSpeed <= 5) {
         markIcon.src = '../image/coloCheck/icon-1.png';
         let num = 150 / 5; // 0~15 对应
         let result = scopeWithdrawalSpeed * num;
+        markText.textContent = '慢速'
         markBox.style.width = `${395 - result}px`;
       } else if (scopeWithdrawalSpeed > 5 && scopeWithdrawalSpeed <= 10) {
         markIcon.src = '../image/coloCheck/icon-2.png';
-
         let num = 117 / 5; // 5~10 
         let result = scopeWithdrawalSpeed * num;
+        markText.textContent = '中速'
         markBox.style.width = `${395 - result - 40}px`;
       } else if (scopeWithdrawalSpeed > 10 && scopeWithdrawalSpeed <= 15) {
         markIcon.src = '../image/coloCheck/icon-3.png'
         let num = 117 / 5; // 5~10 
         let result = scopeWithdrawalSpeed * num;
+        markText.textContent = '快速'
         markBox.style.width = `${395 - result - 44}px`;
+      } else {
+        markBox.style.width = `395px`;
       }
       speedBoxLabel.innerHTML = `目前速率${scopeWithdrawalSpeed || 0}`;
     }
 
-    // testSpeed(0);
+    // testSpeed(1);
 
     // setInterval(() => {
     //   let randomSpeed = Math.floor(Math.random() * 20);
