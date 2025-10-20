@@ -303,9 +303,7 @@
             // img.style.backgroundColor = '#000000'
         }
         let areaLevels = getAreaLevels(result.regionAttentionLevels)
-        if (result.isSurgicalInstrumentUsed === 1) {
-            statusItem.style.display = 'block'
-        }
+        statusItem.style.display = result.isSurgicalInstrumentUsed === 1 ? 'block' : 'none'
 
         isRenderArea(areaLevels, stomachSvg)
         let unexaminedRegionsArr = result?.unexaminedRegions?.split(',')
