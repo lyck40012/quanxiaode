@@ -26,8 +26,8 @@ const mapping = {
 };
 let stomachColor = {
     0: '#ffffff',
-    1: '#2DAD83',
-    2: '#748CEF',
+    1: '#748CEF',
+    2: '#2DAD83',
 }
 
 let oldAreaObj = {}
