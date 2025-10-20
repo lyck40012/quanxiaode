@@ -78,7 +78,7 @@ function isRenderArea(objx, stomachSvg) {
     let { result, upgradedAreas } = compareObject(oldAreaObj, objx)
     if (Object.values(result).length) {
         for (const key in result) {
-            let color = result[key];
+            let color = result[key] < 2 ? result[key] : 2;
             let regionArr = stomachSvg.querySelectorAll(`.cls-${key}`)
             if (regionArr.length) {
                 regionArr.forEach(x => {
