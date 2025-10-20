@@ -111,7 +111,7 @@ body {
   font-size: 18px;
   color: #FFFFFF;
   margin-right: 12px;
-  width: 140px;
+  white-space: nowrap;
 }
 
 .main-content .colo-box .speed-box .img {
