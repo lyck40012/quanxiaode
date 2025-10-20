@@ -170,11 +170,10 @@ body {
   gap: 20px;
   text-align: center;
   height: 100%;
-  overflow-y: auto;
   background: #0C121F;
   border-radius: 16px 16px 16px 16px;
   border: 2px solid #1C2236;
-  padding: 17px 0px;
+  padding: 15px 0px;
 
 }
 

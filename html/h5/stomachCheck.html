@@ -223,7 +223,8 @@
                 </div>
                 <div class="right">
                     <div class="inspect-area">待检区域</div>
-                    <div class="right-list"> </div>
+                    <div class="right-list">
+                    </div>
                 </div>
 
             </div>
@@ -308,7 +309,7 @@
         isRenderArea(areaLevels, stomachSvg)
         let unexaminedRegionsArr = result?.unexaminedRegions?.split(',')
         // 处理未检查区域
-        if (unexaminedRegionsArr && Array.isArray(unexaminedRegionsArr) && unexaminedRegionsArr.length <= 6) {
+        if (unexaminedRegionsArr && Array.isArray(unexaminedRegionsArr) && unexaminedRegionsArr.length <= 9) {
             let rightList = document.querySelector('.right-list')
             rightList.innerHTML = ''
             unexaminedRegionsArr.forEach(regionId => {
