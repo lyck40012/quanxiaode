@@ -206,7 +206,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 23px 70px;
+  padding: 23px 65px;
 }
 
 .screen-right .right-content .status-box-content {
