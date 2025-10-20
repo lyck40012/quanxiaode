@@ -26,9 +26,8 @@ const mapping = {
 };
 let stomachColor = {
     0: '#ffffff',
-    1: '#0A8C3C',
-    2: '#D07505',
-    3: '#983511',
+    1: '#2DAD83',
+    2: '#748CEF',
 }
 
 let oldAreaObj = {}
@@ -52,8 +51,8 @@ function compareObject(obj1, obj2) {
             upgradedAreas.push(key)
         }
     })
-    oldAreaObj = {...obj2}
-    return {result, upgradedAreas}
+    oldAreaObj = { ...obj2 }
+    return { result, upgradedAreas }
 }
 
 function getAreaLevels(dataArr) {
@@ -76,7 +75,7 @@ function getAreaLevels(dataArr) {
 }
 
 function isRenderArea(objx, stomachSvg) {
-    let {result, upgradedAreas} = compareObject(oldAreaObj, objx)
+    let { result, upgradedAreas } = compareObject(oldAreaObj, objx)
     if (Object.values(result).length) {
         for (const key in result) {
             let color = result[key];

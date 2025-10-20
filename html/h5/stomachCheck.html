@@ -25,8 +25,8 @@
                         <div class="time examinationTotalDuration"></div>
                     </div>
                     <?xml version="1.0" encoding="UTF-8"?>
-                    <svg id="stomach-svg" data-name="图层 1" width="270" xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 1012.94 881.51">
+                    <svg id="stomach-svg" data-name="图层 1" width="330" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 1100.94 881.51">
                         <defs>
                             <style>
                                 .cls-255,
@@ -213,15 +213,11 @@
                         </div>
                         <div class="item">
                             <div class="cirle"></div>
-                            <div class="status">低关注</div>
+                            <div class="status">充分观察</div>
                         </div>
                         <div class="item">
                             <div class="cirle"></div>
-                            <div class="status">中关注</div>
-                        </div>
-                        <div class="item">
-                            <div class="cirle"></div>
-                            <div class="status">高关注</div>
+                            <div class="status">未充分观察</div>
                         </div>
                     </div>
                 </div>
@@ -301,15 +297,15 @@
         if (!isJSON(data)) return
         let result = JSON.parse(data)
         if (result.messageType == 1002) return
-        console.log("result===>", result);
         examinationTotalDuration.innerHTML = result.examinationTotalDuration || '00:00:00'
         if (result.ldImagePath) {
             smallPlaceholder.src = 'http://127.0.0.1:8080/scopeai_data/' + result.ldImagePath
             // img.style.backgroundColor = '#000000'
         }
-        statusItem.style.display = result.isSurgicalInstrumentUsed === 1 ? 'block' : 'none';
         let areaLevels = getAreaLevels(result.regionAttentionLevels)
-
+        if (result.isSurgicalInstrumentUsed === 1) {
+            statusItem.style.display = 'block'
+        }
 
         isRenderArea(areaLevels, stomachSvg)
         let unexaminedRegionsArr = result?.unexaminedRegions?.split(',')

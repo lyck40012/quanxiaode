@@ -26,7 +26,7 @@ body {
 }
 
 .top-content {
-  height: calc(60% - 25px);
+  height: calc(65% - 25px);
   background: #0E1320;
   border-radius: 16px 16px 16px 16px;
   border: 2px solid #1E2431;
@@ -127,21 +127,14 @@ body {
 .main-content .left .area-status .item:nth-child(2) .cirle {
   width: 18px;
   height: 18px;
-  background: #0A8C3C;
+  background: #2DAD83;
   border-radius: 50%;
 }
 
 .main-content .left .area-status .item:nth-child(3) .cirle {
   width: 18px;
   height: 18px;
-  background: #D07505;
-  border-radius: 50%;
-}
-
-.main-content .left .area-status .item:nth-child(4) .cirle {
-  width: 18px;
-  height: 18px;
-  background: #983511;
+  background: #748CEF;
   border-radius: 50%;
 }
 
@@ -200,7 +193,7 @@ body {
   border-radius: 16px 16px 16px 16px;
   padding: 8px 13px 16px;
   border: 2px solid #1E2431;
-  height: 40%;
+  height: 35%;
   box-sizing: border-box;
   width: 100%;
   margin-top: 25px;
@@ -237,7 +230,7 @@ body {
 }
 
 .small-placeholder {
-  width: 80%;
+  width: 90%;
 }
 
 
