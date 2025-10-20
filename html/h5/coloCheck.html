@@ -73,11 +73,13 @@
         </div>
 
         <div class="speed-box">
-          <div class="label">目前速率0cm/s</div>
+          <div class="label">目前速率0</div>
           <div class="mark-box">
-            <div class="top">
-              <img class="mark-icon" width="15" height="21" src="../image/coloCheck/icon-1.png" />
-              <span class="mark-text">慢速</span>
+            <div class="top-content">
+              <div class="top">
+                <img class="mark-icon" width="15" height="21" src="../image/coloCheck/icon-1.png" />
+                <span class="mark-text">慢速</span>
+              </div>
             </div>
             <div class="mark"></div>
           </div>
@@ -105,89 +107,24 @@
         </div>
         <div class="status-box">
           <div class="status-content">
-            <div class="status-item status-item1">
+            <!-- <div class="status-item status-item4">
               <img src="../image/coloCheck/status-icon1.png" width="40" height="40" alt="">
+              <span>发送滑镜</span>
+            </div> -->
+            <div class="status-item status-item1">
+              <img src="../image/coloCheck/status-icon2.png" width="40" height="40" alt="">
               <span>退镜过快</span>
             </div>
             <div class="status-item status-item2">
-              <img src="../image/coloCheck/status-icon2.png" width="40" height="40" alt="">
+              <img src="../image/coloCheck/status-icon3.png" width="40" height="40" alt="">
               <span>请吸附粪水</span>
             </div>
             <div class="status-item status-item3">
-              <img src="../image/coloCheck/status-icon3.png" width="40" height="40" alt="">
+              <img src="../image/coloCheck/status-icon4.png" width="40" height="40" alt="">
               <span>请冲洗镜头</span>
             </div>
-            <div class="status-item status-item4">
-              <img src="../image/coloCheck/status-icon4.png" width="40" height="40" alt="">
-              <span>器械出现</span>
-            </div>
           </div>
-          <div class="animation-svg">
-            <svg width="80" height="80" viewBox="0 0 80 80" aria-hidden="true">
-              <g class="spinner">
-                <circle cx="40" cy="20" r="5" fill="#3b82f6" transform="rotate(0,40,40)" />
-                <circle cx="40" cy="20" r="5" fill="#3b82f6" transform="rotate(60,40,40)" />
-                <circle cx="40" cy="20" r="5" fill="#3b82f6" transform="rotate(120,40,40)" />
-                <circle cx="40" cy="20" r="5" fill="#3b82f6" transform="rotate(180,40,40)" />
-                <circle cx="40" cy="20" r="5" fill="#3b82f6" transform="rotate(240,40,40)" />
-                <circle cx="40" cy="20" r="5" fill="#3b82f6" transform="rotate(300,40,40)" />
-              </g>
-
-              <style>
-                /* 可选闪烁效果
-                                                  .spinner {
-                                                      transform-origin: 40px 40px;
-                                                      animation: rotate 1s linear infinite;
-                                                  }
-                                                  @keyframes rotate {
-                                                      to {
-                                                          transform: rotate(360deg);
-                                                      }
-                                                  }
-                                                  */
-                circle {
-                  animation: blink 1.2s ease-in-out infinite;
-                }
-
-                circle:nth-child(1) {
-                  animation-delay: 0s;
-                }
-
-                circle:nth-child(2) {
-                  animation-delay: 0.2s;
-                }
-
-                circle:nth-child(3) {
-                  animation-delay: 0.4s;
-                }
-
-                circle:nth-child(4) {
-                  animation-delay: 0.6s;
-                }
-
-                circle:nth-child(5) {
-                  animation-delay: 0.8s;
-                }
-
-                circle:nth-child(6) {
-                  animation-delay: 1s;
-                }
-
-                @keyframes blink {
-
-                  0%,
-                  100% {
-                    opacity: 0.3;
-                  }
-
-                  50% {
-                    opacity: 1;
-                  }
-                }
-              </style>
-            </svg>
-            <div class="loading">等待中</div>
-          </div>
+          <img class="status-img" src="../image/instrument.png" width="181" height="232" alt="">
         </div>
       </div>
     </div>
@@ -196,7 +133,9 @@
     let markBox = document.querySelector('.mark-box');
     let speedBoxLabel = document.querySelector('.speed-box .label');
     let markIcon = document.querySelector('.mark-icon');
+    let markContent = document.querySelector('.mark-box .top')
     function testSpeed(scopeWithdrawalSpeed) {
+      markContent.style.display = scopeWithdrawalSpeed ? 'flex' : 'none'
       if (scopeWithdrawalSpeed > 15) scopeWithdrawalSpeed = 15;
       if (scopeWithdrawalSpeed > 0 && scopeWithdrawalSpeed <= 5) {
         markIcon.src = '../image/coloCheck/icon-1.png';
@@ -215,10 +154,10 @@
         let result = scopeWithdrawalSpeed * num;
         markBox.style.width = `${395 - result - 44}px`;
       }
-      speedBoxLabel.innerHTML = `目前速率${scopeWithdrawalSpeed || 0}cm/s`;
+      speedBoxLabel.innerHTML = `目前速率${scopeWithdrawalSpeed || 0}`;
     }
 
-    // testSpeed(8);
+    // testSpeed(0);
 
     // setInterval(() => {
     //   let randomSpeed = Math.floor(Math.random() * 20);
@@ -237,9 +176,8 @@
     let statusItem1 = document.querySelector('.status-item1'); // 退镜过快
     let statusItem2 = document.querySelector('.status-item2'); // 请吸附粪水
     let statusItem3 = document.querySelector('.status-item3'); // 请冲洗镜头
-    let statusItem4 = document.querySelector('.status-item4'); // 请冲洗镜头
+    let statusImg = document.querySelector('.status-img'); //
     let statusContent = document.querySelector('.status-content')
-    let animationSvg = document.querySelector('.animation-svg')
     let img = document.querySelector('.img'); // 截图
     //肠svg
     let cls1 = document.querySelector('.cls-1')
@@ -261,40 +199,33 @@
       // 肠svg
       cls1.style.fill = result.isIleocecalValveReached === 1 ? '#4090EC' : '#fff'
       testSpeed(result.scopeWithdrawalSpeed);
+      // result.scopeWithdrawalDuration
+      const [h, m, s] = result?.scopeWithdrawalDuration?.split(":")?.map(Number);
+      const totalSeconds = h * 3600 + m * 60 + s;
       // 肠模型除了回盲瓣颜色
-      if (result.scopeWithdrawalSpeed > 1 && result.scopeWithdrawalSpeed < 6) {
-        cls2.style.fill = '#32b181'
-        cls3.style.fill = '#32b181'
-        cls4.style.fill = '#32b181'
-      } else if (result.scopeWithdrawalSpeed > 6 && result.scopeWithdrawalSpeed < 10) {
-        cls2.style.fill = '#7f59ee'
-        cls3.style.fill = '#7f59ee'
-        cls4.style.fill = '#7f59ee'
-      } else if (result.scopeWithdrawalSpeed > 10 && result.scopeWithdrawalSpeed < 15) {
-        cls2.style.fill = '#f770001'
-        cls3.style.fill = '#f770001'
-        cls4.style.fill = '#f770001'
+      if (totalSeconds > 6 * 60) {
+        cls2.style.fill = '#4090EC'
+        cls3.style.fill = '#4090EC'
+        cls4.style.fill = '#4090EC'
       } else {
         cls2.style.fill = '#ffffff'
         cls3.style.fill = '#ffffff'
         cls4.style.fill = '#ffffff'
       }
 
-      statusContent.style.display = result.isSurgicalInstrumentUsed ? 'flex' : 'none'
-      animationSvg.style.display = result.isSurgicalInstrumentUsed ? 'none' : 'block'
-      // 器械使用状态显示与隐藏
       if (result.isSurgicalInstrumentUsed == 1) {
+        testSpeed(0)
         statusItem1.style.display = 'none'
         statusItem2.style.display = 'none'
         statusItem3.style.display = 'none'
-        statusItem4.style.display = 'block'
+        statusImg.style.display = 'block'
       } else {
         statusItem1.style.display = 'block'
         statusItem2.style.display = 'block'
         statusItem3.style.display = 'block'
-        statusItem4.style.display = 'none'
+        statusImg.style.display = 'none'
       }
-      // 根据数据控制状态项显示
+
       // 退镜过快
       statusItem1.style.opacity = result.isRapidWithdrawal === 1 ? 1 : 0.5;
 
@@ -304,6 +235,8 @@
       // 请冲洗镜头
       statusItem3.style.opacity = result.lensBlurStatus === 1 ? 1 : 0.5;
 
+      // 发送滑镜子
+      // statusItem4.style.opacity = result.isSurgicalInstrumentUsed === 1 ? 1 : 0.5;
     });
   </script>
 </body>

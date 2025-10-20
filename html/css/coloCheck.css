@@ -70,7 +70,7 @@ body {
   border-radius: 16px 16px 16px 16px;
   border: 2px solid #1C2236;
   padding: 10px 8px;
-  width: 300px;
+  width: 280px;
   height: 54px;
   margin-bottom: 20px;
   box-sizing: border-box;
@@ -138,6 +138,10 @@ body {
   right: 15px;
   top: -30px;
   transition: width 0.5s ease;
+}
+
+.main-content .colo-box .speed-box .mark-box .top-content {
+  height: 24px;
 }
 
 .main-content .colo-box .speed-box .mark-box .top {
@@ -246,12 +250,7 @@ body {
   margin-top: 8px;
 }
 
-.status-detection .status-box .animation-svg .loading {
-  font-weight: 600;
-  font-size: 24px;
-  color: #FFFFFF;
-  margin-top: 15px;
-}
+
 
 .status-item {
   width: 200px;
@@ -267,6 +266,10 @@ body {
   box-sizing: border-box;
   display: none;
   /* opacity: 0.5; */
+}
+
+.status-img {
+  display: none;
 }
 
 .status-item img {
