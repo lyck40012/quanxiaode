@@ -138,7 +138,6 @@
 
     function testSpeed(scopeWithdrawalSpeed) {
       markContent.style.display = scopeWithdrawalSpeed ? 'flex' : 'none'
-
       if (scopeWithdrawalSpeed > 15) scopeWithdrawalSpeed = 15;
       if (scopeWithdrawalSpeed > 0 && scopeWithdrawalSpeed <= 5) {
         markIcon.src = '../image/coloCheck/icon-1.png';
@@ -163,7 +162,6 @@
       }
       speedBoxLabel.innerHTML = `目前速率${scopeWithdrawalSpeed || 0}`;
     }
-
     // testSpeed(1);
 
     // setInterval(() => {
