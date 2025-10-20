@@ -63,7 +63,6 @@ body {
 .screen-left-top .top-box {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
     height: calc(100% - 54px);
     overflow: auto;
     background: #0F1527;
@@ -127,7 +126,6 @@ body {
 .screen-left-bottom .top-box {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
     overflow-y: auto;
     height: calc(100% - 54px);
     background: #0F1527;
