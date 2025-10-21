@@ -79,6 +79,7 @@ function isRenderArea(objx, stomachSvg) {
     if (Object.values(result).length) {
         for (const key in result) {
             let color = result[key] < 2 ? result[key] : 2;
+            console.log("color==>", color, result[key]);
             let regionArr = stomachSvg.querySelectorAll(`.cls-${key}`)
             if (regionArr.length) {
                 regionArr.forEach(x => {
