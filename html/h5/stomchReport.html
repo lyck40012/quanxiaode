@@ -255,7 +255,7 @@
     const fileName = params.get("patientId");
     let sortUrl = fileName.split('_')[0]
     let baseUrl = `http://127.0.0.1:8080`;
-    let imgUrl = `${baseUrl}/user/data/${sortUrl}`;
+    let imgUrl = `${baseUrl}/scopeai_data/data/${sortUrl}`;
     let fileList = ["食管", "食管胃结合部", "幽门", "十二指肠球部", "十二指肠降部", "胃窦前壁", "胃窦小弯", "胃窦后壁", "胃窦大弯", "胃底穹隆", "胃角", "胃体下部前壁", "胃体下部后壁", "胃体下部大弯", "胃体中上部前壁", "胃体中上部后壁", "胃体中上部大弯", "胃体小弯（倒镜）", "胃体小弯（正镜）", "胃体中上部前壁倒镜", "胃体中上部后壁倒镜", "胃体下部前壁倒镜", "胃体下部后壁倒镜"]
 
     function getRandomItems(array, count) {
