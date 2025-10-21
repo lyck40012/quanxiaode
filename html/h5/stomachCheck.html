@@ -309,9 +309,10 @@
         isRenderArea(areaLevels, stomachSvg)
         let unexaminedRegionsArr = result?.unexaminedRegions?.split(',')
         // 处理未检查区域
-        if (unexaminedRegionsArr && Array.isArray(unexaminedRegionsArr) && unexaminedRegionsArr.length <= 9) {
+        if (unexaminedRegionsArr && Array.isArray(unexaminedRegionsArr) && unexaminedRegionsArr.length <= 8) {
             let rightList = document.querySelector('.right-list')
             rightList.innerHTML = ''
+            console.log("unexaminedRegionsArr======>", GASTRIC_REGION_DICT, unexaminedRegionsArr);
             unexaminedRegionsArr.forEach(regionId => {
                 const regionName = GASTRIC_REGION_DICT[regionId];
                 if (regionName) {

@@ -93,7 +93,7 @@ function isRenderArea(objx, stomachSvg) {
                     let regionArr = stomachSvg.querySelectorAll(`.cls-${x}`)
                     if (regionArr.length) {
                         regionArr.forEach(m => {
-                            m.style.fill = '#0A8C3C'
+                            m.style.fill = '#2DAD83'
                         })
                     }
                 })
