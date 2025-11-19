@@ -24,16 +24,17 @@
 
   // 格式化时间显示函数
   function formatTime(seconds) {
-    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
     const remainingSeconds = seconds % 60;
-    return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
   }
 
   // 更新时间显示
   function updateTime() {
     const currentTime = Date.now();
     const elapsedSeconds = Math.floor((currentTime - startTime) / 1000);
-    timeElement.textContent = `00:${formatTime(elapsedSeconds)}`;
+    timeElement.textContent = formatTime(elapsedSeconds);
   }
 
   // 每秒更新一次时间
