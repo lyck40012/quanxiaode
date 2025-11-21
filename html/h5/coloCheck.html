@@ -264,10 +264,19 @@
         const huanxingBox = document.querySelector('.huanxing-box');
         if (huanxingBox) {
           if (isZIndexHigh) {
-            huanxingBox.style.zIndex = '-99';
+            // 隐藏：先移除 show 类，触发动画
+            huanxingBox.classList.remove('show');
+            // 等动画完成后再改变 z-index
+            setTimeout(() => {
+              huanxingBox.style.zIndex = '-99';
+            }, 500);
             isZIndexHigh = false;
           } else {
+            // 显示：先设置 z-index，然后添加 show 类触发动画
             huanxingBox.style.zIndex = '99';
+            setTimeout(() => {
+              huanxingBox.classList.add('show');
+            }, 10);
             isZIndexHigh = true;
           }
         }
