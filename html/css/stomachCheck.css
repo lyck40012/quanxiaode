@@ -376,3 +376,29 @@ body {
     border-width: 0px;
   }
 }
+
+/* M键唤醒图片 */
+.m-image-box {
+  position: fixed;
+  top: 50%;
+  left: 100px;
+  transform: translateY(-50%);
+  z-index: -999;
+  opacity: 0;
+  transform: translateY(-50%) scale(0.5) translateX(-100px);
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  pointer-events: none;
+}
+
+.m-image-box.show {
+  z-index: 99;
+  opacity: 1;
+  transform: translateY(-50%) scale(1) translateX(0);
+  pointer-events: auto;
+}
+
+.m-image-box img {
+  max-width: 400px;
+  max-height: 400px;
+  display: block;
+}

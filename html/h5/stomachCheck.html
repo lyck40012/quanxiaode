@@ -263,6 +263,10 @@
             <div class="ripple"></div>
         </div>
     </div>
+    <!-- M键唤醒图片 -->
+    <div class="m-image-box">
+        <img src="../image/test.png" alt="test image" />
+    </div>
 
 </body>
 <script>
@@ -357,6 +361,32 @@
                         huanxingBox.classList.add('show');
                     }, 10);
                     isZIndexHigh = true;
+                }
+            }
+        }
+    });
+
+    // 监听键盘 'm' 键切换 m-image-box 的 z-index
+    let isMImageZIndexHigh = false; // 用于跟踪当前 z-index 状态
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'm' || event.key === 'M') {
+            const mImageBox = document.querySelector('.m-image-box');
+            if (mImageBox) {
+                if (isMImageZIndexHigh) {
+                    // 隐藏：先移除 show 类，触发动画
+                    mImageBox.classList.remove('show');
+                    // 等动画完成后再改变 z-index
+                    setTimeout(() => {
+                        mImageBox.style.zIndex = '-99';
+                    }, 500);
+                    isMImageZIndexHigh = false;
+                } else {
+                    // 显示：先设置 z-index，然后添加 show 类触发动画
+                    mImageBox.style.zIndex = '99';
+                    setTimeout(() => {
+                        mImageBox.classList.add('show');
+                    }, 10);
+                    isMImageZIndexHigh = true;
                 }
             }
         }
