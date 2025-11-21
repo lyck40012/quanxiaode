@@ -128,6 +128,17 @@
         </div>
       </div>
     </div>
+    <!-- 唤醒图标 -->
+    <div class="huanxing-box">
+      <div class="pulse-siri">
+        <div class="icon"></div>
+      </div>
+      <div style="position: absolute; width:0; height:0; display:flex; justify-content:center; align-items:center;">
+        <div class="ripple"></div>
+        <div class="ripple"></div>
+        <div class="ripple"></div>
+      </div>
+    </div>
   </div>
   <script>
     let markBox = document.querySelector('.mark-box');
@@ -243,7 +254,28 @@
       // 发送滑镜子
       // statusItem4.style.opacity = result.isSurgicalInstrumentUsed === 1 ? 1 : 0.5;
     });
+
+
+
+    // 监听键盘 'k' 键切换 huanxing-box 的 z-index
+    let isZIndexHigh = false; // 用于跟踪当前 z-index 状态
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'k' || event.key === 'K') {
+        const huanxingBox = document.querySelector('.huanxing-box');
+        if (huanxingBox) {
+          if (isZIndexHigh) {
+            huanxingBox.style.zIndex = '-99';
+            isZIndexHigh = false;
+          } else {
+            huanxingBox.style.zIndex = '99';
+            isZIndexHigh = true;
+          }
+        }
+      }
+    });
   </script>
+
+
 </body>
 
 </html>
