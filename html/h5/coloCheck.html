@@ -292,10 +292,15 @@
     document.addEventListener('keydown', function (event) {
       if (event.key === 'm' || event.key === 'M') {
         const mImageBox = document.querySelector('.m-image-box');
+        const huanxingBox = document.querySelector('.huanxing-box');
         if (mImageBox) {
           if (isMImageZIndexHigh) {
             // 隐藏：先移除 show 类，触发动画
             mImageBox.classList.remove('show');
+            // 恢复 huanxing-box 的波纹
+            if (huanxingBox) {
+              huanxingBox.classList.remove('hide-ripple');
+            }
             // 等动画完成后再改变 z-index
             setTimeout(() => {
               mImageBox.style.zIndex = '-99';
@@ -304,6 +309,10 @@
           } else {
             // 显示：先设置 z-index，然后添加 show 类触发动画
             mImageBox.style.zIndex = '99';
+            // 隐藏 huanxing-box 的波纹
+            if (huanxingBox) {
+              huanxingBox.classList.add('hide-ripple');
+            }
             setTimeout(() => {
               mImageBox.classList.add('show');
             }, 10);

@@ -289,7 +289,7 @@ body {
 /* 唤醒图标 */
 .huanxing-box {
   position: fixed;
-  top: 50%;
+  top: 10%;
   right: 100px;
   z-index: -999;
   display: flex;
@@ -332,6 +332,17 @@ body {
   filter: blur(2px);
 }
 
+.icon {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-image: url("../image/icon.png");
+  background-size: cover;
+  background-position: center;
+  /* 稍微缩小一点让出边框 */
+  transform: scale(0.92);
+}
+
 /* 波纹通用样式 */
 .ripple {
   position: absolute;
@@ -346,7 +357,6 @@ body {
   box-shadow: 0 0 20px rgba(0, 221, 255, 0.2);
   opacity: 0;
   z-index: 1;
-  /* 这里的动画时间错开是关键 */
 }
 
 .ripple:nth-child(1) {
@@ -367,15 +377,9 @@ body {
   border-color: #00ddff;
 }
 
-.icon {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background-image: url("../image/icon.png");
-  background-size: cover;
-  background-position: center;
-  /* 稍微缩小一点让出边框 */
-  transform: scale(0.92);
+/* 当m-image-box显示时，隐藏huanxing-box的波纹 */
+.huanxing-box.hide-ripple .ripple {
+  display: none;
 }
 
 @keyframes ripple-anim {
@@ -397,15 +401,12 @@ body {
 /* M键唤醒图片 */
 .m-image-box {
   position: fixed;
-  top: 50%;
-  left: 100px;
+  top: 32%;
+  right: 20px;
+  transform: translateY(-50%);
   z-index: -999;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0;
   opacity: 0;
-  transform: scale(0.5) translateX(-100px);
+  transform: translateY(-50%) scale(0.5);
   transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   pointer-events: none;
 }
@@ -413,66 +414,12 @@ body {
 .m-image-box.show {
   z-index: 99;
   opacity: 1;
-  transform: scale(1) translateX(0);
+  transform: translateY(-50%) scale(1);
   pointer-events: auto;
 }
 
-.m-pulse-siri {
-  position: relative;
-  z-index: 10;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* 核心发光边框 */
-.m-pulse-siri::after {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #2af598, #009efd);
-  z-index: -1;
-  filter: blur(2px);
-}
-
-.m-image {
+.m-image-box img {
   max-width: 400px;
   max-height: 400px;
   display: block;
-  border-radius: 8px;
-}
-
-/* M键波纹通用样式 */
-.m-ripple {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background: transparent;
-  border: 2px solid rgba(0, 221, 255, 0.5);
-  box-shadow: 0 0 20px rgba(0, 221, 255, 0.2);
-  opacity: 0;
-  z-index: 1;
-}
-
-.m-ripple:nth-child(1) {
-  animation: ripple-anim 2.5s linear infinite;
-  animation-delay: 0s;
-  border-color: #ff0055;
-}
-
-.m-ripple:nth-child(2) {
-  animation: ripple-anim 2.5s linear infinite;
-  animation-delay: 0.8s;
-  border-color: #00ffaa;
-}
-
-.m-ripple:nth-child(3) {
-  animation: ripple-anim 2.5s linear infinite;
-  animation-delay: 1.6s;
-  border-color: #00ddff;
 }
