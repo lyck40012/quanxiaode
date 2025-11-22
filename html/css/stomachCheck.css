@@ -382,9 +382,9 @@ body {
 }
 
 /* M键唤醒图片 */
-.m-image-box {
+.modal {
   position: fixed;
-  top: 32%;
+  top: 44%;
   right: 20px;
   transform: translateY(-50%);
   z-index: -999;
@@ -392,17 +392,128 @@ body {
   transform: translateY(-50%) scale(0.5);
   transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   pointer-events: none;
+  padding: 10px;
+  background-color: #09090c;
 }
 
-.m-image-box.show {
+.modal.show {
   z-index: 99;
   opacity: 1;
   transform: translateY(-50%) scale(1);
   pointer-events: auto;
 }
 
-.m-image-box img {
-  max-width: 400px;
-  max-height: 400px;
-  display: block;
+.modal .m-box {
+  border: 2px solid #262F4F;
+  border-radius: 16px;
+  width: 500px;
+  background-color: #13141e;
+  overflow: hidden;
+}
+
+.m-box .header-box {
+  display: flex;
+  align-items: center;
+  padding: 22px 17px;
+}
+
+.m-box .header-box .title {
+  font-weight: 600;
+  font-size: 26px;
+  color: #A2AFCD;
+  margin-left: 16px;
+}
+
+.m-box .status-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 17px;
+  padding-top: 0px;
+}
+
+.m-box .status-box .left {
+  color: #A2AFCD;
+  font-size: 12px;
+  padding: 10px 15px;
+  border: 2px solid #192147;
+  display: flex;
+  align-items: center;
+  border-radius: 6px;
+}
+
+.m-box .status-box .left .block {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #b0746c;
+  margin-right: 10px;
+}
+
+.m-box .status-box .right {
+  color: #A2AFCD;
+  font-size: 12px;
+  border: 2px solid #192147;
+  border-radius: 6px;
+  padding: 10px 15px;
+}
+
+.m-box .status-box .right img {}
+
+.m-box .box-content {
+  width: 100%;
+  height: 400px;
+  border-top: 1px solid #262F4F;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  background-color: #141625;
+  padding: 15px;
+  overflow-y: auto;
+
+}
+
+.m-box .box-content .warrning {
+  background-color: #12141e;
+  padding: 12px 18px;
+  width: fit-content;
+  margin: 0 auto;
+  font-size: 12px;
+  border-radius: 12px;
+}
+
+.m-box .box-content .warrning .text {
+  text-align: center;
+  color: #69738a;
+  margin-bottom: 5px;
+
+}
+
+.m-box .box-content .warrning .time {
+  text-align: center;
+  color: #303c66;
+}
+
+.m-box .box-content .right {
+  padding: 15px;
+  border-radius: 16px;
+  background-color: #282b48;
+  width: fit-content;
+  margin-left: auto;
+}
+
+.m-box .box-content .right .desc {
+  color: #dcdce2;
+  margin-bottom: 12px;
+  font-size: 12px;
+}
+
+.m-box .box-content .right .time {
+  color: #45517e;
+  margin-top: 12px;
+}
+
+.m-box .box-content .left {
+  margin-right: auto;
+  margin-left: 0px;
 }

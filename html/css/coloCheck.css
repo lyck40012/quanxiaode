@@ -411,7 +411,7 @@ body {
   pointer-events: none;
 }
 
-.m-image-box.show {
+.m-image-box .show {
   z-index: 99;
   opacity: 1;
   transform: translateY(-50%) scale(1);
