@@ -272,8 +272,8 @@ body {
 /* 唤醒图标 */
 .huanxing-box {
   position: fixed;
-  top: 10%;
-  right: 100px;
+  top: 2%;
+  right: 20px;
   z-index: -999;
   display: flex;
   justify-content: center;
@@ -384,7 +384,7 @@ body {
 /* M键唤醒图片 */
 .modal {
   position: fixed;
-  top: 37%;
+  top: 28%;
   right: 20px;
   transform: translateY(-50%);
   z-index: -999;
