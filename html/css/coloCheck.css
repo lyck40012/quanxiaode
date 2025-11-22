@@ -401,7 +401,7 @@ body {
 /* M键唤醒对话框 */
 .modal {
   position: fixed;
-  top: 40%;
+  top: 35%;
   right: 20px;
   transform: translateY(-50%);
   z-index: -999;

@@ -384,7 +384,7 @@ body {
 /* M键唤醒图片 */
 .modal {
   position: fixed;
-  top: 44%;
+  top: 37%;
   right: 20px;
   transform: translateY(-50%);
   z-index: -999;
@@ -444,6 +444,7 @@ body {
 
 
 .m-box .box-content .right {
+  max-width: 80%;
   padding: 15px;
   border-radius: 16px;
   background-color: #282b48;
@@ -462,7 +463,40 @@ body {
   margin-top: 12px;
 }
 
-.m-box .box-content .left {
+.m-box .box-content .left-copilot {
+  max-width: 80%;
   margin-right: auto;
-  margin-left: 0px;
+
+  width: fit-content;
+}
+
+.m-box .box-content .left-copilot .avatar-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: #bebfc3;
+  margin-bottom: 10px;
+}
+
+
+.m-box .box-content .left-copilot .content {
+  color: #dcdce2;
+  margin-bottom: 12px;
+  font-size: 22px;
+  padding: 15px;
+  border-radius: 16px;
+  background-color: #282b48;
+}
+
+.m-box .box-content .left-copilot .content .desc {
+  color: #dcdce2;
+  margin-bottom: 12px;
+  font-size: 22px;
+}
+
+.m-box .box-content .left-copilot .content .time {
+  color: #45517e;
+  margin-top: 12px;
+  font-size: 16px;
 }
