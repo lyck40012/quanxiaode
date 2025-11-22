@@ -139,9 +139,57 @@
         <div class="ripple"></div>
       </div>
     </div>
-    <!-- M键唤醒图片 -->
-    <div class="m-image-box">
-      <img src="../image/test.png" alt="test image" />
+    <!-- M键唤醒对话框 -->
+    <div class="modal">
+        <div class="m-box">
+            <div class="header-box">
+                <img src="../image/qualityControl.png" alt="logo" width="48" height="48" />
+                <span class="title">智能语音对话</span>
+            </div>
+            <div class="status-box">
+                <div class="left">
+                    <div class="block"></div>
+                    <span>连接断开</span>
+                </div>
+                <div class="right">
+                    <img />
+                    <span>消息已发送</span>
+                </div>
+            </div>
+
+            <div class="box-content">
+                <div class="warrning">
+                    <div class="text">已截取图像</div>
+                    <div class="text">(20251123_232_34_232_sotme),</div>
+                    <div class="text">说"发送"即可发送</div>
+                    <div class="time">12:23:13</div>
+                </div>
+                <div class="warrning">
+                    <div class="text">已截取图像</div>
+                    <div class="text">(20251123_232_34_232_sotme),</div>
+                    <div class="text">说"发送"即可发送</div>
+                    <div class="time">12:23:13</div>
+                </div>
+                <div class="right">
+                    <div class="desc">帮我分析一下这张图片</div>
+                    <img src="../image/test/111.jpg" width="80" />
+                    <div class="time">12:25:23</div>
+                </div>
+                <div class="warrning">
+                    <div class="text">收到您的消息：帮我分析一下这张图片</div>
+                    <div class="time">12:23:13</div>
+                </div>
+                <div class="right left">
+                    <div class="desc">图像显示：食管内壁，光滑，无明显病变。无出血或肿块</div>
+                    <div class="time">12:25:23</div>
+                </div>
+                <div class="warrning">
+                    <div class="text">WebSocket连接已断开</div>
+                    <div class="time">12:23:13</div>
+                </div>
+            </div>
+        </div>
+
     </div>
   </div>
   <script>
@@ -287,11 +335,11 @@
       }
     });
 
-    // 监听键盘 'm' 键切换 m-image-box 的 z-index
+    // 监听键盘 'm' 键切换 modal 的 z-index
     let isMImageZIndexHigh = false; // 用于跟踪当前 z-index 状态
     document.addEventListener('keydown', function (event) {
       if (event.key === 'm' || event.key === 'M') {
-        const mImageBox = document.querySelector('.m-image-box');
+        const mImageBox = document.querySelector('.modal');
         const huanxingBox = document.querySelector('.huanxing-box');
         if (mImageBox) {
           if (isMImageZIndexHigh) {
