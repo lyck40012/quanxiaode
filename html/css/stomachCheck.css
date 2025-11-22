@@ -406,7 +406,7 @@ body {
 .modal .m-box {
   border: 2px solid #262F4F;
   border-radius: 16px;
-  width: 500px;
+  width: 400px;
   background-color: #13141e;
   overflow: hidden;
 }
@@ -414,12 +414,12 @@ body {
 .m-box .header-box {
   display: flex;
   align-items: center;
-  padding: 22px 17px;
+  padding: 20px 17px;
 }
 
 .m-box .header-box .title {
   font-weight: 600;
-  font-size: 26px;
+  font-size: 24px;
   color: #A2AFCD;
   margin-left: 16px;
 }
@@ -428,7 +428,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 22px 17px;
+  padding: 20px 17px;
   padding-top: 0px;
 }
 
@@ -472,6 +472,23 @@ body {
   overflow-y: auto;
 
 }
+
+.m-box .box-content::-webkit-scrollbar {
+  width: 4px;
+}
+
+.m-box .box-content::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  background: #3a3e58;
+}
+
+.m-box .box-content::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background: #0e1321;
+}
+
+
 
 .m-box .box-content .warrning {
   background-color: #12141e;
