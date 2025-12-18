@@ -79,15 +79,15 @@
 
 
         <div class="time-box">
-          <div class="label">总手术时间</div>
+          <div class="label">总手术时长</div>
           <div class="value totalTime"></div>
         </div>
         <div class="time-box">
-          <div class="label">进镜时间</div>
+          <div class="label">进镜时长</div>
           <div class="value insertionTime"></div>
         </div>
         <div class="time-box">
-          <div class="label">退镜时间</div>
+          <div class="label">退镜时长</div>
           <div class="value recoveryTime"></div>
         </div>
       </div>
@@ -255,7 +255,7 @@
       insertionTime.textContent = data?.examinationRegionsTime?.insertionDuration || '-';
       recoveryTime.textContent = data?.examinationRegionsTime?.withdrawalDuration || '-';
     } catch (error) {
-      console.error('读取时间数据失败:', error);
+      console.error('读取时长数据失败:', error);
     }
   }
 
