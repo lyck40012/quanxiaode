@@ -1,0 +1,13 @@
+﻿{
+  "name": "ws-server",
+  "version": "1.0.0",
+  "description": "示例WebSocket服务端，配合前端websocket-client.js",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "ws": "^8.16.0"
+  }
+}

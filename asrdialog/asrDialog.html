@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能语音对话系统</title>
+    <script src="../js/websocket-client.js"></script>
+    <script src="../js/data.js"></script>
+    <script src="../js/prohibit.js"></script>
+    <!-- Markdown渲染库 -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="./asrDialog.css">
+    <style>
+        /* 【新增】临时图片预览样式 */
+        .image-preview-overlay {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            padding: 8px;
+            max-width: 200px;
+        }
+
+        .image-preview-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .image-preview-overlay img {
+            width: 100%;
+            height: auto;
+            max-height: 150px;
+            object-fit: contain;
+            border-radius: 4px;
+        }
+
+        .preview-label {
+            margin-top: 4px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* 消息中的缩略图样式 */
+        .message-thumbnail {
+            max-width: 100px;
+            max-height: 100px;
+            border-radius: 4px;
+            margin-top: 8px;
+            cursor: pointer;
+            object-fit: cover;
+        }
+
+        /* Markdown样式 - 基于22px基础字体 */
+        .message-text h1,
+        .message-text h2,
+        .message-text h3,
+        .message-text h4,
+        .message-text h5,
+        .message-text h6 {
+            margin: 12px 0 8px 0;
+            font-weight: 600;
+            color: inherit;
+        }
+
+        .message-text h1 {
+            font-size: 1.5em;
+        }
+
+        /* 33px */
+        .message-text h2 {
+            font-size: 1.3em;
+        }
+
+        /* 28.6px */
+        .message-text h3 {
+            font-size: 1.1em;
+        }
+
+        /* 24.2px */
+
+        .message-text p {
+            margin: 8px 0;
+            line-height: 1.6;
+            font-size: inherit;
+            /* 继承22px */
+        }
+
+        .message-text ul,
+        .message-text ol {
+            margin: 8px 0;
+            padding-left: 24px;
+            font-size: inherit;
+            /* 继承22px */
+        }
+
+        .message-text li {
+            margin: 4px 0;
+            line-height: 1.6;
+            font-size: inherit;
+            /* 继承22px */
+        }
+
+        .message-text code {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
+            /* 19.8px */
+        }
+
+        .message-text pre {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            padding: 12px;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+
+        .message-text pre code {
+            background: none;
+            padding: 0;
+        }
+
+        .message-text blockquote {
+            border-left: 3px solid rgba(255, 255, 255, 0.3);
+            padding-left: 12px;
+            margin: 10px 0;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .message-text strong {
+            font-weight: 600;
+        }
+
+        .message-text em {
+            font-style: italic;
+        }
+
+        .message-text a {
+            color: #5B9FED;
+            text-decoration: none;
+        }
+
+        .message-text a:hover {
+            text-decoration: underline;
+        }
+
+        .message-text table {
+            border-collapse: collapse;
+            margin: 10px 0;
+            width: 100%;
+        }
+
+        .message-text table th,
+        .message-text table td {
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 6px 10px;
+            text-align: left;
+        }
+
+        .message-text table th {
+            background: rgba(255, 255, 255, 0.1);
+            font-weight: 600;
+        }
+
+        .message-text hr {
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            margin: 16px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- 顶部标题栏 -->
+        <div class="header">
+            <div class="header-box">
+                <img src="../image/qualityControl.png" alt="logo" width="48" height="48">
+                <span class="title">智能语音对话</span>
+            </div>
+            <div class="status-bar">
+                <div class="connection-status" id="connectionStatus">
+                    <div class="status-dot"></div>
+                    <span class="status-text">连接中...</span>
+                </div>
+                <div class="asr-status" id="asrStatus">
+                    <div class="mic-icon">🎤</div>
+                    <span class="asr-text">准备听取语音</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 对话显示区域 -->
+        <div class="chat-container">
+            <div class="chat-messages" id="chatMessages">
+                <!-- 欢迎消息 -->
+                <div class="message system">
+                    <div class="message-content">
+                        <div class="message-text">智能语音对话系统已启动，请开始说话。</div>
+                        <div class="message-time">系统消息</div>
+                    </div>
+                </div>
+            </div>
+            <!-- 【新增】临时图片预览区域 -->
+            <div class="image-preview-overlay" id="imagePreview" style="display: none;">
+                <div class="image-preview-content">
+                    <img id="previewImage" src="" alt="截图预览">
+                    <div class="preview-label">截图预览</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部输入区域 -->
+        <div class="input-container">
+            <div class="input-wrapper">
+                <div class="input-status" id="inputStatus">
+                    <div class="status-indicator"></div>
+                    <span class="status-label">准备输入</span>
+                </div>
+                <div class="input-area" id="inputArea">
+                    <div class="input-placeholder" id="inputPlaceholder">请开始说话...</div>
+                    <div class="input-text" id="inputText"></div>
+                </div>
+                <div class="input-actions">
+                    <button class="btn-clear" id="btnClear" title="清空输入">清空</button>
+                    <button class="btn-send" id="btnSend" title="发送消息（或说" 发送"）">发送</button>
+                </div>
+            </div>
+            <div class="tips">
+                <span>💡 说出"发送"即可自动发送消息</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // WebSocket客户端连接
+        const wsClient = createWebSocketClient({
+            url: '/',
+            enableHandshake: false  // 禁用握手机制，连接成功后立即触发open事件
+        });
+
+        // 全局变量
+        let isListening = false;
+        let currentInput = '';
+        let messageHistory = [];
+        // 【新增】当前临时图片
+        let currentImageBase64 = null;
+
+        // DOM元素
+        const chatMessages = document.getElementById('chatMessages');
+        const inputText = document.getElementById('inputText');
+        const inputPlaceholder = document.getElementById('inputPlaceholder');
+        const inputArea = document.getElementById('inputArea');
+        const connectionStatus = document.getElementById('connectionStatus');
+        const asrStatus = document.getElementById('asrStatus');
+        const inputStatus = document.getElementById('inputStatus');
+        const btnClear = document.getElementById('btnClear');
+        const btnSend = document.getElementById('btnSend');
+        // 【新增】图片预览元素
+        const imagePreview = document.getElementById('imagePreview');
+        const previewImage = document.getElementById('previewImage');
+
+        // 连接状态管理
+        function updateConnectionStatus(connected) {
+            const statusDot = connectionStatus.querySelector('.status-dot');
+            const statusText = connectionStatus.querySelector('.status-text');
+
+            if (connected) {
+                statusDot.className = 'status-dot connected';
+                statusText.textContent = '已连接';
+            } else {
+                statusDot.className = 'status-dot disconnected';
+                statusText.textContent = '连接断开';
+            }
+        }
+
+        // ASR状态管理
+        function updateASRStatus(listening, text = '准备听取语音') {
+            const micIcon = asrStatus.querySelector('.mic-icon');
+            const asrText = asrStatus.querySelector('.asr-text');
+
+            if (listening) {
+                micIcon.className = 'mic-icon listening';
+                asrText.textContent = text;
+                asrStatus.classList.add('listening');
+                connectionStatus.classList.add('listening-mode');
+            } else {
+                micIcon.className = 'mic-icon';
+                asrText.textContent = text;
+                asrStatus.classList.remove('listening');
+                connectionStatus.classList.remove('listening-mode');
+            }
+        }
+
+        // 输入状态管理
+        function updateInputStatus(hasText, isDetected = false) {
+            const statusIndicator = inputStatus.querySelector('.status-indicator');
+            const statusLabel = inputStatus.querySelector('.status-label');
+
+            if (hasText) {
+                statusIndicator.className = 'status-indicator active';
+                statusLabel.textContent = isDetected ? '检测到"发送"关键词' : '正在输入...';
+                inputPlaceholder.style.display = 'none';
+                inputText.style.display = 'block';
+            } else {
+                statusIndicator.className = 'status-indicator';
+                statusLabel.textContent = '准备输入';
+                inputPlaceholder.style.display = 'block';
+                inputText.style.display = 'none';
+            }
+        }
+
+        // 添加消息到对话区域
+        function addMessage(text, type = 'user', timestamp = null, imageBase64 = null) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+
+            const messageContent = document.createElement('div');
+            messageContent.className = 'message-content';
+
+            const messageText = document.createElement('div');
+            messageText.className = 'message-text';
+            messageText.textContent = text;
+
+            const messageTime = document.createElement('div');
+            messageTime.className = 'message-time';
+            messageTime.textContent = timestamp || new Date().toLocaleTimeString('zh-CN');
+
+            messageContent.appendChild(messageText);
+
+            // 【新增】如果有图片，添加缩略图
+            if (imageBase64) {
+                const thumbnail = document.createElement('img');
+                thumbnail.className = 'message-thumbnail';
+                thumbnail.src = imageBase64;
+                thumbnail.alt = '截图';
+                thumbnail.title = '点击查看大图';
+                thumbnail.onclick = () => {
+                    // 可以添加查看大图的逻辑
+                    window.open(imageBase64, '_blank');
+                };
+                messageContent.appendChild(thumbnail);
+            }
+
+            messageContent.appendChild(messageTime);
+            messageDiv.appendChild(messageContent);
+
+            chatMessages.appendChild(messageDiv);
+
+            // 滚动到最新消息
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            // 保存到历史记录
+            messageHistory.push({
+                text: text,
+                type: type,
+                timestamp: timestamp || new Date().toISOString(),
+                imageBase64: imageBase64
+            });
+        }
+
+        // 更新输入栏内容
+        function updateInput(text, detectedKeyword = false, isRealtime = false, shouldAppend = false) {
+            // 【修复】支持累加模式
+            if (shouldAppend) {
+                currentInput = (currentInput || '') + text;
+            } else {
+                currentInput = text;
+            }
+            inputText.innerText = currentInput;  // 使用innerText支持换行显示
+
+            if (text && text.trim()) {
+                updateInputStatus(true, detectedKeyword);
+
+                // 应用监听状态样式
+                inputArea.classList.add('listening-active');
+
+                if (isRealtime) {
+                    inputArea.classList.add('realtime-updating');
+                    inputText.classList.add('realtime-text');
+                    inputText.classList.remove('confirmed-text');
+                } else {
+                    inputArea.classList.remove('realtime-updating');
+                    inputText.classList.add('confirmed-text');
+                    inputText.classList.remove('realtime-text');
+                }
+
+                if (detectedKeyword) {
+                    inputArea.classList.add('keyword-detected');
+                } else {
+                    inputArea.classList.remove('keyword-detected');
+                }
+            } else {
+                updateInputStatus(false);
+                inputArea.classList.remove('keyword-detected');
+                inputArea.classList.remove('listening-active');
+                inputArea.classList.remove('realtime-updating');
+            }
+        }
+
+        // 发送消息
+        function sendMessage() {
+            // 获取当前输入栏的内容
+            const inputContent = currentInput || inputText.textContent || '';
+            const hasImage = currentImageBase64 !== null;
+
+            if ((inputContent && inputContent.trim()) || hasImage) {
+                const messageText = inputContent ? inputContent.trim() : '（图片）';
+
+                // 【修复】添加用户消息到对话区域，包含图片缩略图
+                addMessage(messageText, 'user', null, currentImageBase64);
+
+                // 隐藏图片预览
+                if (hasImage) {
+                    imagePreview.style.display = 'none';
+                    currentImageBase64 = null;
+                }
+
+                // 【修复】立即清空输入栏
+                updateInput('');
+                currentInput = '';
+                updateInputStatus(false);
+
+                // 更新ASR状态
+                updateASRStatus(true, '消息已发送，继续说话或说"发送"...');
+
+                // 发送确认消息到后端
+                sendConfirmToBackend(messageText);
+
+                // 模拟系统回复（实际应用中可能需要调用AI接口）
+                setTimeout(() => {
+                    addMessage('收到您的消息：' + messageText, 'system');
+                }, 500);
+            }
+        }
+
+        // 清空输入
+        function clearInput() {
+            updateInput('');
+            currentInput = '';
+            // 【新增】清空图片预览
+            if (currentImageBase64) {
+                imagePreview.style.display = 'none';
+                currentImageBase64 = null;
+            }
+        }
+
+        // 发送确认消息到后端
+        function sendConfirmToBackend(messageText) {
+            // 通过WebSocket发送确认消息
+            if (wsClient && wsClient.socket) {
+                const confirmMsg = {
+                    messageType: 1012, // WEBSOCKET_MSG_ASR_SEND_CONFIRM
+                    message: '发送成功',
+                    content: messageText,
+                    timestamp: new Date().toISOString()
+                };
+                wsClient.socket.send(JSON.stringify(confirmMsg));
+            }
+        }
+
+        // 缓冲区状态管理
+        let bufferContent = '';
+        let isBufferMode = false;
+
+        // 更新缓冲区内容（不同于实时识别内容）
+        function updateBuffer(content) {
+            bufferContent = content;
+            if (content && content.trim()) {
+                isBufferMode = true;
+                updateInput(content, false, false);
+            }
+        }
+
+        // 处理实时识别内容
+        function handleRealtimeText(text) {
+            if (!isBufferMode || !bufferContent) {
+                // 只有在没有缓冲区内容时才显示实时识别
+                updateInput(text, false, true);
+            }
+        }
+
+        // WebSocket消息处理
+        wsClient.on('open', () => {
+            updateConnectionStatus(true);
+            addMessage('WebSocket连接已建立', 'system');
+
+            // 手动发送客户端类型信息给后端，以便后端识别并发送消息
+            wsClient.send(JSON.stringify({
+                "clientType": 1,  // PC_MAIN 主屏幕
+                "messageType": 0  // 握手消息类型
+            }));
+        });
+
+        wsClient.on('close', () => {
+            updateConnectionStatus(false);
+            addMessage('WebSocket连接已断开', 'system');
+        });
+
+        wsClient.on('message', (data) => {
+            if (!isJSON(data)) return;
+
+            let result = JSON.parse(data);
+
+            // 【修复】过滤消息：只处理ASR相关的消息类型
+            // 1004-1012: ASR基础消息
+            // 2001-2005: Clinical ASR Assistant消息
+            const asrMessageTypes = [1004, 1005, 1006, 1007, 1008, 1009, 1010, 1011, 1012, 2001, 2002, 2003, 2004, 2005];
+            if (!asrMessageTypes.includes(result.messageType)) {
+                // 忽略非ASR消息（如胃质控消息1001、肠质控消息1002等）
+                return;
+            }
+
+            // 处理不同类型的消息
+            switch (result.messageType) {
+                case 1004: // ASR实时文字消息（包括唤醒后的识别）
+                    if (result.transcriptionText) {
+                        // ✨ 修复：支持 is_final 字段，实现临时和最终结果的区分
+                        // is_final=true: 最终确认的文本，应用确认样式
+                        // is_final=false: 临时识别结果，应用实时样式
+                        const isFinal = result.is_final !== undefined ? result.is_final : true;
+
+                        // 添加调试日志
+                        console.log(`[前端] 收到ASR消息: text="${result.transcriptionText}", is_final=${isFinal}`);
+
+                        // 根据用户要求：仅处理最终结果（is_final=True）
+                        if (isFinal) {
+                            updateInput(result.transcriptionText, result.detectedKeyword || false, false, false);
+                            updateASRStatus(true, '识别完成');
+                            console.log(`[前端] 已更新输入框: "${result.transcriptionText}"`);
+                        } else {
+                            // 临时结果不显示
+                            console.log(`[前端] 跳过临时结果: "${result.transcriptionText}"`);
+                        }
+                    }
+                    break;
+
+                case 1005: // ASR发送指令消息
+                    if (result.command === 'send_message') {
+                        sendMessage();
+                        updateASRStatus(false, '消息已发送');
+                    } else if (result.command === 'clear') {
+                        clearInput();
+                        updateASRStatus(false, '输入已清空');
+                    }
+                    break;
+
+                case 1006: // ASR状态更新消息
+                    if (result.isListening !== undefined) {
+                        updateASRStatus(result.isListening, result.statusText || '准备听取语音');
+                    }
+                    // 处理唤醒状态
+                    if (result.isAwakened) {
+                        // 更新输入状态为"等待输入"
+                        updateInputStatus(false, false);
+                        inputStatus.querySelector('.status-label').textContent = '等待输入...';
+                        inputStatus.querySelector('.status-indicator').className = 'status-indicator active';
+                        // 显示系统消息
+                        if (result.message) {
+                            addMessage(result.message, 'system');
+                        }
+                        console.log('[前端] ASR系统已唤醒，等待用户输入');
+                    }
+                    break;
+
+                case 1007: // ASR唤醒消息
+                    if (result.message) {
+                        addMessage(result.message, 'system');
+                        // 为唤醒消息添加特殊样式
+                        const lastMessage = chatMessages.lastElementChild;
+                        if (lastMessage) {
+                            lastMessage.classList.add('wakeup-message');
+                        }
+                        updateASRStatus(true, '正在监听...');
+                        updateInputStatus(true, false);
+                        // 清空输入框准备接收新内容
+                        currentInput = '';
+                        inputText.textContent = '';
+                    }
+                    break;
+
+                case 1008: // ASR缓冲区更新消息
+                    if (result.bufferContent) {
+                        updateBuffer(result.bufferContent);
+                        if (result.sentenceComplete) {
+                            updateASRStatus(true, '监听中...一句话结束，继续说或说"发送"');
+                        }
+                    }
+                    break;
+
+                case 1009: // ASR实时识别消息
+                    if (result.realtimeText && result.isPartial) {
+                        // 显示临时识别内容，只在无缓冲区内容时显示
+                        handleRealtimeText(result.realtimeText);
+                        updateASRStatus(true, '正在识别...');
+                    }
+                    break;
+
+                case 1010: // ASR监听超时消息
+                    addMessage('监听超时，请重新说"晓得晓得"唤醒', 'system');
+                    updateASRStatus(false, '监听已超时');
+                    updateInputStatus(false);
+                    break;
+
+                case 1011: // ASR缓冲区清空消息
+                    if (result.message) {
+                        addMessage(result.message, 'system');
+                        // 重置缓冲区状态
+                        bufferContent = '';
+                        isBufferMode = false;
+                        updateInput('');
+                        currentInput = '';
+                    }
+                    break;
+
+                case 1012: // ASR发送确认消息
+                    if (result.message) {
+                        console.log('后端确认发送:', result.message);
+                    }
+                    break;
+
+                // ==================== Clinical ASR Assistant 新增消息类型 ====================
+
+                case 2001: // Clinical ASR: 编辑框流式推送文本（备用，当前使用1004）
+                    // 注意：当前 ASR 引擎发送的是 1004 消息类型，使用 transcriptionText 字段
+                    // 此 case 保留用于未来可能的扩展
+                    if (result.text) {
+                        const isFinal = result.is_final !== undefined ? result.is_final : true;
+                        updateInput(result.text, false, !isFinal, false);
+                        updateASRStatus(true, 'Clinical ASR正在识别...');
+                    }
+                    break;
+
+                case 2002: // Clinical ASR: 编辑框清空
+                    clearInput();
+                    addMessage('Clinical ASR已清空输入', 'system');
+                    break;
+
+                case 2003: // Clinical ASR: 编辑框显示图像
+                    if (result.image_base64) {
+                        // 【修复】显示在临时预览区域，而不是编辑框
+                        currentImageBase64 = result.image_base64;
+                        previewImage.src = result.image_base64;
+                        imagePreview.style.display = 'block';
+
+                        // 添加系统提示
+                        addMessage(`已截取图像（${result.patient_name || '未知患者'}），说"发送"即可发送`, 'system');
+                    }
+                    break;
+
+                case 2004: // Clinical ASR: 对话框推送用户消息
+                    if (result.content) {
+                        // 复用现有的addMessage函数
+                        addMessage(result.content, 'user', result.timestamp);
+                    }
+                    break;
+
+                case 2005: // Clinical ASR: 对话框更新LLM回复
+                    if (result.content && result.message_id) {
+                        // 查找是否已存在该message_id的消息
+                        const existingMsg = Array.from(chatMessages.children).find(
+                            msg => msg.dataset && msg.dataset.messageId === result.message_id
+                        );
+
+                        if (existingMsg) {
+                            // 更新现有消息
+                            const messageText = existingMsg.querySelector('.message-text');
+                            if (messageText) {
+                                // 使用markdown渲染
+                                messageText.innerHTML = marked.parse(result.content);
+                            }
+                        } else {
+                            // 创建新的AI消息
+                            const messageDiv = document.createElement('div');
+                            messageDiv.className = 'message assistant';
+                            messageDiv.dataset.messageId = result.message_id;
+
+                            const messageContent = document.createElement('div');
+                            messageContent.className = 'message-content';
+
+                            const messageText = document.createElement('div');
+                            messageText.className = 'message-text';
+                            // 使用markdown渲染
+                            messageText.innerHTML = marked.parse(result.content);
+
+                            const messageTime = document.createElement('div');
+                            messageTime.className = 'message-time';
+                            messageTime.textContent = result.timestamp
+                                ? new Date(result.timestamp).toLocaleTimeString('zh-CN')
+                                : new Date().toLocaleTimeString('zh-CN');
+
+                            messageContent.appendChild(messageText);
+                            messageContent.appendChild(messageTime);
+                            messageDiv.appendChild(messageContent);
+                            chatMessages.appendChild(messageDiv);
+                        }
+
+                        // 滚动到最新消息
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                    }
+                    break;
+
+                // ==================== 其他消息类型 ====================
+
+                default:
+                    // 其他消息类型的处理
+                    console.log('未知消息类型:', result.messageType, result);
+                    break;
+            }
+        });
+
+        // 按钮事件绑定
+        btnSend.addEventListener('click', sendMessage);
+        btnClear.addEventListener('click', clearInput);
+
+        // 键盘事件支持
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            } else if (e.key === 'Escape') {
+                clearInput();
+            }
+        });
+
+        // 初始化
+        updateConnectionStatus(false);
+        updateASRStatus(false);
+        updateInputStatus(false);
+
+    </script>
+
+</body>
+
+</html>

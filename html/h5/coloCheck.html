@@ -283,7 +283,8 @@
     // 监听键盘 'k' 键切换 huanxing-box 的 z-index
     let isZIndexHigh = false; // 用于跟踪当前 z-index 状态
     document.addEventListener('keydown', function (event) {
-      if (event.key === 'k' || event.key === 'K') {
+      //event.key === 'k' || event.key === 'K'
+      if (false) {
         const huanxingBox = document.querySelector('.huanxing-box');
         if (huanxingBox) {
           if (isZIndexHigh) {

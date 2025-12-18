@@ -2,15 +2,15 @@
  * 简单的WebSocket客户端封装函数
  * 提供基本的WebSocket连接和消息处理功能
  */
- function isJSON(str){
-    if(typeof str !=="string") return false
+function isJSON(str) {
+    if (typeof str !== "string") return false
     try {
         const result = JSON.parse(str)
-        return typeof result==='object'&& result !==null
+        return typeof result === 'object' && result !== null
     } catch (error) {
         return false
     }
- }
+}
 
 function createWebSocketClient(options = {}) {
     const {
@@ -291,79 +291,3 @@ if (typeof module !== 'undefined' && module.exports) {
 } else if (typeof window !== 'undefined') {
     window.createWebSocketClient = createWebSocketClient;
 }
-
-// 使用示例
-/*
-// 创建WebSocket客户端实例（基础用法）
-const wsClient = createWebSocketClient({
-    url: '/api/websocket',
-    reconnectInterval: 3000,     // 重连间隔3秒
-    maxReconnectAttempts: 5,     // 最大重连次数5次
-    autoConnect: true            // 自动连接
-});
-
-// 创建带握手功能的WebSocket客户端实例
-const wsClientWithHandshake = createWebSocketClient({
-    url: '/api/websocket',
-    reconnectInterval: 3000,
-    maxReconnectAttempts: 5,
-    autoConnect: true,
-    enableHandshake: true,       // 启用握手
-    handshakeData: {             // 握手数据
-        token: 'your-auth-token',
-        userId: '12345',
-        clientType: 'web'
-    }
-});
-
-// 监听事件
-wsClient.on('open', () => {
-    console.log('连接已建立');
-});
-
-wsClient.on('message', (data) => {
-    console.log('收到消息:', data);
-});
-
-wsClient.on('reconnect', (info) => {
-    console.log(`正在重连... 第${info.attempt}次，最大${info.maxAttempts}次`);
-});
-
-wsClient.on('close', () => {
-    console.log('连接已关闭');
-});
-
-// 握手相关事件监听
-wsClientWithHandshake.on('handshake', (data) => {
-    console.log('开始握手:', data);
-});
-
-wsClientWithHandshake.on('handshakeSuccess', (response) => {
-    console.log('握手成功:', response);
-});
-
-wsClientWithHandshake.on('handshakeError', (error) => {
-    console.error('握手失败:', error);
-});
-
-wsClientWithHandshake.on('open', (event) => {
-    if (event.handshakeComplete) {
-        console.log('连接已建立且握手完成');
-    } else {
-        console.log('连接已建立');
-    }
-});
-
-// 发送消息
-wsClient.send('Hello Server!');
-
-// 手动执行握手（如果需要）
-wsClientWithHandshake.performHandshake();
-
-// 手动重连
-wsClient.reconnect();
-
-// 获取重连状态
-const reconnectInfo = wsClient.getReconnectInfo();
-console.log('重连状态:', reconnectInfo);
-*/
