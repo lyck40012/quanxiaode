@@ -229,15 +229,15 @@
                         </svg>
                     </div>
                     <div class="time-box">
-                        <div class="label">总手术时间</div>
+                        <div class="label">总手术时长</div>
                         <div class="value totalTime"></div>
                     </div>
                     <div class="time-box">
-                        <div class="label">食管检查时间</div>
+                        <div class="label">食管检查时长</div>
                         <div class="value esophagusTime"></div>
                     </div>
                     <div class="time-box">
-                        <div class="label">胃检查时间</div>
+                        <div class="label">胃检查时长</div>
                         <div class="value stomachTime"></div>
                     </div>
                 </div>
@@ -384,7 +384,7 @@
             let areaLevels = getAreaLevels(data?.regionAttentionLevels)
             isRenderArea1(areaLevels, stomachSvg)
         } catch (error) {
-            console.error('读取时间数据失败:', error);
+            console.error('读取时长数据失败:', error);
         }
     }
 
