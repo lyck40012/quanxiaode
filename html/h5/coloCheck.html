@@ -7,7 +7,10 @@
   <title>医疗质控系统</title>
   <link rel="stylesheet" href="../css/coloCheck.css">
   <script src="../js/prohibit.js"></script>
+  <script src="../js/asrdialog.js"></script>
   <script src="../js/websocket-client.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
 </head>
 
 <body>
@@ -144,7 +147,7 @@
       <div class="m-box">
 
         <div class="box-content">
-          <div class="right">
+          <!-- <div class="user">
             <div class="desc">帮我分析一下这张图片</div>
             <img src="../image/test/111.jpg" width="80" />
             <div class="time">12:25:23</div>
@@ -156,9 +159,10 @@
             </div>
             <div class="content">
               <div class="desc">图像显示：食管内壁，光滑，无明显病变。无出血或肿块</div>
+              <img src="../image/test/111.jpg" width="80" />
               <div class="time">12:25:23</div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -311,34 +315,7 @@
     let isMImageZIndexHigh = false; // 用于跟踪当前 z-index 状态
     document.addEventListener('keydown', function (event) {
       if (event.key === 'm' || event.key === 'M') {
-        const mImageBox = document.querySelector('.modal');
-        const huanxingBox = document.querySelector('.huanxing-box');
-        if (mImageBox) {
-          if (isMImageZIndexHigh) {
-            // 隐藏：先移除 show 类，触发动画
-            mImageBox.classList.remove('show');
-            // 恢复 huanxing-box 的波纹
-            if (huanxingBox) {
-              huanxingBox.classList.remove('hide-ripple');
-            }
-            // 等动画完成后再改变 z-index
-            setTimeout(() => {
-              mImageBox.style.zIndex = '-99';
-            }, 500);
-            isMImageZIndexHigh = false;
-          } else {
-            // 显示：先设置 z-index，然后添加 show 类触发动画
-            mImageBox.style.zIndex = '99';
-            // 隐藏 huanxing-box 的波纹
-            if (huanxingBox) {
-              huanxingBox.classList.add('hide-ripple');
-            }
-            setTimeout(() => {
-              mImageBox.classList.add('show');
-            }, 10);
-            isMImageZIndexHigh = true;
-          }
-        }
+
       }
     });
   </script>
