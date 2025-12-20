@@ -1,35 +1,49 @@
-const asrMessageTypes = [1004, 1005, 1006, 1007, 1008, 1009, 1010, 1011, 1012, 2001, 2002, 2003, 2004, 2005];
+
 let isZIndexHigh = false; // 记录唤醒气泡显示状态
 let isMImageZIndexHigh = false; // 记录截图弹窗显示状态
+let saveUserMessage = ''
+let imgList = []
+function start(result) {
 
-if (!asrMessageTypes.includes(result.messageType)) {
-  // 忽略非ASR消息（如胃质控消息1001、肠质控消息1002等）
-  return;
+
+  console.log("result=====>", result);
+
+  switch (result.messageType) {
+    case 1006:
+      chatLogo(Boolean(result.isAwakened));
+      break
+    case 2003:
+
+      if (result.image_base64) {
+        imgList.push(result.image_base64)
+      }
+      break
+    case 1004:
+      const isFinal = result.is_final !== undefined ? result.is_final : true;
+      if (result.transcriptionText && isFinal) {
+        saveUserMessage = result.transcriptionText
+      }
+      break
+    case 1005:
+      if (result.command === 'send_message') {
+        chatGUI(true)
+        addMessage(saveUserMessage, 'user', result.timestamp);
+      }
+      break
+    case 2005:
+      if (result.content && result.message_id) {
+        chatGUI(true)
+        addMessage(result.content, 'ai', result.timestamp);
+      }
+      imgList = []
+      break;
+  }
 }
-switch (result.messageType) {
-  case 1004:
-    break
-  case 1007:
-    chatLogo(Boolean(result.isAwakened));
-    break
-  case 2004:
-    if (result.content) {
-      chatGUI(true)
-      addMessage(result.content, 'user', result.timestamp);
-    }
-    break
-  case 2005:
-    if (result.content && result.message_id) {
-      chatGUI(true)
-      addMessage(result.content, 'ai', result.timestamp);
-    }
-    break;
-}
 
 
 
 
-function addMessage(text, type = 'user', timestamp = null, imageBase64 = null) {
+function addMessage(text, type = 'user', timestamp = null) {
 
   let boxContent = document.querySelector('.box-content')
   //时间
@@ -39,25 +53,34 @@ function addMessage(text, type = 'user', timestamp = null, imageBase64 = null) {
     ? new Date(timestamp).toLocaleTimeString('zh-CN')
     : new Date().toLocaleTimeString('zh-CN');
 
-
+  if (!text && type == 'user') return
   if (type == 'user') {
-    const userBox = document.createElement('div');
-    userBox.className = 'user';
-    const textBox = document.createElement('div');
-    textBox.className = 'desc';
-    textBox.textContent = text
-    userBox.appendChild(textBox)
-    if (imageBase64) {
-      const img = document.createElement('img');
-      img.src = imageBase64
-      img.width = 80
-      img.onclick = () => {
-        window.open(imageBase64, '_blank');
-      };
-      userBox.appendChild(img)
+    try {
+      boxContent.textContent = null
+      const userBox = document.createElement('div');
+      userBox.className = 'user';
+      const textBox = document.createElement('div');
+      textBox.className = 'desc';
+      textBox.textContent = text
+      userBox.appendChild(textBox)
+      if (imgList.length) {
+        imgList.forEach((item, index) => {
+          const img = document.createElement('img');
+          img.src = item
+          img.width = 80
+          img.onclick = () => {
+            window.open(item, '_blank');
+          };
+          userBox.appendChild(img)
+        });
+
+      }
+      userBox.appendChild(time)
+      boxContent.appendChild(userBox)
+    } catch (error) {
+      console.log("error====>", error);
+
     }
-    userBox.appendChild(time)
-    boxContent.appendChild(userBox)
   } else {
     const systemBox = document.createElement('div');
     systemBox.className = 'left-copilot';

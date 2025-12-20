@@ -8,7 +8,9 @@
     <script src="../js/websocket-client.js"></script>
     <script src="../js/data.js"></script>
     <script src="../js/prohibit.js"></script>
+    <script src="../js/asrdialog.js"></script>
     <link rel="stylesheet" href="../css/stomachCheck.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 
 <body>
@@ -268,7 +270,7 @@
         <div class="m-box">
 
             <div class="box-content">
-                <div class="right">
+                <!-- <div class="right">
                     <div class="desc">帮我分析一下这张图片</div>
                     <img src="../image/test/111.jpg" width="80" />
                     <div class="time">12:25:23</div>
@@ -282,7 +284,7 @@
                         <div class="desc">图像显示：食管内壁，光滑，无明显病变。无出血或肿块</div>
                         <div class="time">12:25:23</div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -331,7 +333,14 @@
     wsClient.on('message', (data) => {
         if (!isJSON(data)) return
         let result = JSON.parse(data)
-        if (result.messageType == 1002) return
+
+        const messageTypes = [1004, 1005, 1006, 1007, 1008, 1009, 1010, 1011, 1012, 2001, 2002, 2003, 2004, 2005, 1002];
+        if (messageTypes.includes(result.messageType)) {
+            start(result)
+            return
+        }
+
+
         examinationTotalDuration.innerHTML = result.examinationTotalDuration || '00:00:00'
         if (result.ldImagePath) {
             smallPlaceholder.src = 'http://127.0.0.1:8080/scopeai_data/' + result.ldImagePath
@@ -360,65 +369,65 @@
     })
 
     // 监听键盘 'k' 键切换 huanxing-box 的 z-index
-    let isZIndexHigh = false; // 用于跟踪当前 z-index 状态
-    document.addEventListener('keydown', function (event) {
-        if (event.key === 'k' || event.key === 'K') {
-            const huanxingBox = document.querySelector('.huanxing-box');
-            if (huanxingBox) {
-                if (isZIndexHigh) {
-                    // 隐藏：先移除 show 类，触发动画
-                    huanxingBox.classList.remove('show');
-                    // 等动画完成后再改变 z-index
-                    setTimeout(() => {
-                        huanxingBox.style.zIndex = '-99';
-                    }, 500);
-                    isZIndexHigh = false;
-                } else {
-                    // 显示：先设置 z-index，然后添加 show 类触发动画
-                    huanxingBox.style.zIndex = '99';
-                    setTimeout(() => {
-                        huanxingBox.classList.add('show');
-                    }, 10);
-                    isZIndexHigh = true;
-                }
-            }
-        }
-    });
+    // let isZIndexHigh = false; // 用于跟踪当前 z-index 状态
+    // document.addEventListener('keydown', function (event) {
+    //     if (event.key === 'k' || event.key === 'K') {
+    //         const huanxingBox = document.querySelector('.huanxing-box');
+    //         if (huanxingBox) {
+    //             if (isZIndexHigh) {
+    //                 // 隐藏：先移除 show 类，触发动画
+    //                 huanxingBox.classList.remove('show');
+    //                 // 等动画完成后再改变 z-index
+    //                 setTimeout(() => {
+    //                     huanxingBox.style.zIndex = '-99';
+    //                 }, 500);
+    //                 isZIndexHigh = false;
+    //             } else {
+    //                 // 显示：先设置 z-index，然后添加 show 类触发动画
+    //                 huanxingBox.style.zIndex = '99';
+    //                 setTimeout(() => {
+    //                     huanxingBox.classList.add('show');
+    //                 }, 10);
+    //                 isZIndexHigh = true;
+    //             }
+    //         }
+    //     }
+    // });
 
     // 监听键盘 'm' 键切换 m-box 的 z-index
-    let isMImageZIndexHigh = false; // 用于跟踪当前 z-index 状态
-    document.addEventListener('keydown', function (event) {
-        if (event.key === 'm' || event.key === 'M') {
-            const mImageBox = document.querySelector('.modal');
-            const huanxingBox = document.querySelector('.huanxing-box');
-            if (mImageBox) {
-                if (isMImageZIndexHigh) {
-                    // 隐藏：先移除 show 类，触发动画
-                    mImageBox.classList.remove('show');
-                    // 恢复 huanxing-box 的波纹
-                    if (huanxingBox) {
-                        huanxingBox.classList.remove('hide-ripple');
-                    }
-                    // 等动画完成后再改变 z-index
-                    setTimeout(() => {
-                        mImageBox.style.zIndex = '-99';
-                    }, 500);
-                    isMImageZIndexHigh = false;
-                } else {
-                    // 显示：先设置 z-index，然后添加 show 类触发动画
-                    mImageBox.style.zIndex = '99';
-                    // 隐藏 huanxing-box 的波纹
-                    if (huanxingBox) {
-                        huanxingBox.classList.add('hide-ripple');
-                    }
-                    setTimeout(() => {
-                        mImageBox.classList.add('show');
-                    }, 10);
-                    isMImageZIndexHigh = true;
-                }
-            }
-        }
-    });
+    // let isMImageZIndexHigh = false; // 用于跟踪当前 z-index 状态
+    // document.addEventListener('keydown', function (event) {
+    //     if (event.key === 'm' || event.key === 'M') {
+    //         const mImageBox = document.querySelector('.modal');
+    //         const huanxingBox = document.querySelector('.huanxing-box');
+    //         if (mImageBox) {
+    //             if (isMImageZIndexHigh) {
+    //                 // 隐藏：先移除 show 类，触发动画
+    //                 mImageBox.classList.remove('show');
+    //                 // 恢复 huanxing-box 的波纹
+    //                 if (huanxingBox) {
+    //                     huanxingBox.classList.remove('hide-ripple');
+    //                 }
+    //                 // 等动画完成后再改变 z-index
+    //                 setTimeout(() => {
+    //                     mImageBox.style.zIndex = '-99';
+    //                 }, 500);
+    //                 isMImageZIndexHigh = false;
+    //             } else {
+    //                 // 显示：先设置 z-index，然后添加 show 类触发动画
+    //                 mImageBox.style.zIndex = '99';
+    //                 // 隐藏 huanxing-box 的波纹
+    //                 if (huanxingBox) {
+    //                     huanxingBox.classList.add('hide-ripple');
+    //                 }
+    //                 setTimeout(() => {
+    //                     mImageBox.classList.add('show');
+    //                 }, 10);
+    //                 isMImageZIndexHigh = true;
+    //             }
+    //         }
+    //     }
+    // });
 </script>
 
 </html>

@@ -441,7 +441,7 @@ body {
 
 
 
-.m-box .box-content .right {
+.m-box .box-content .user {
   max-width: 80%;
   padding: 15px;
   border-radius: 16px;
@@ -450,13 +450,13 @@ body {
   margin-left: auto;
 }
 
-.m-box .box-content .right .desc {
+.m-box .box-content .user .desc {
   color: #dcdce2;
   margin-bottom: 12px;
   font-size: 22px;
 }
 
-.m-box .box-content .right .time {
+.m-box .box-content .user .time {
   color: #45517e;
   margin-top: 12px;
 }
