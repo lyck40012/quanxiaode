@@ -7,9 +7,6 @@ function start(result) {
   console.log("result=====>", result);
 
   switch (result.messageType) {
-    case 1006:
-      chatLogo(Boolean(result.isAwakened));
-      break
     case 2003:
       if (result.image_base64) {
         imgList.push(result.image_base64)
@@ -20,14 +17,18 @@ function start(result) {
       if (result.transcriptionText && isFinal) {
         chatGUI(true)
         addMessage(result.transcriptionText, 'user', result.timestamp);
-        // saveUserMessage = result.transcriptionText
       }
       break
     case 1005:
-      // if (result.command === 'send_message') {
-      //   chatGUI(true)
-      //   addMessage(saveUserMessage, 'user', result.timestamp);
-      // }
+      if (result.command === 'awaken') {
+        chatLogo(true);
+      } else if (result.command === 'cancel') {
+        chatGUI(false)
+        chatLogo(false)
+        let boxContent = document.querySelector('.box-content')
+        boxContent.textContent = null
+        imgList = []
+      }
       break
     case 2005:
       if (result.content && result.message_id) {
