@@ -3,6 +3,83 @@ let isZIndexHigh = false; // 记录唤醒气泡显示状态
 let isMImageZIndexHigh = false; // 记录截图弹窗显示状态
 let saveUserMessage = ''
 let imgList = []
+let previewOverlay = null
+let previewImg = null
+let isPreviewInited = false
+
+function initPreviewOverlay() {
+  if (isPreviewInited) return
+
+  const head = document.head || document.getElementsByTagName('head')[0]
+  if (head && !document.getElementById('img-preview-style')) {
+    const style = document.createElement('style')
+    style.id = 'img-preview-style'
+    style.textContent = `
+      .img-preview { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; background: rgba(0,0,0,0.65); z-index: 9999; }
+      .img-preview.show { display: flex; }
+      .img-preview img { max-width: 90vw; max-height: 90vh; box-shadow: 0 8px 30px rgba(0,0,0,0.5); }
+      .img-preview .img-preview-close { position: absolute; top: 16px; right: 16px; width: 32px; height: 32px; border: none; border-radius: 16px; background: rgba(0,0,0,0.55); color: #fff; cursor: pointer; font-size: 16px; line-height: 32px; }
+      .img-preview .img-preview-close:hover { background: rgba(0,0,0,0.75); }
+    `
+    head.appendChild(style)
+  }
+
+  const overlay = document.querySelector('.img-preview') || (() => {
+    const div = document.createElement('div')
+    div.className = 'img-preview'
+    const closeBtn = document.createElement('button')
+    closeBtn.type = 'button'
+    closeBtn.className = 'img-preview-close'
+    closeBtn.textContent = 'X'
+    const img = document.createElement('img')
+    img.alt = '预览大图'
+    div.appendChild(closeBtn)
+    div.appendChild(img)
+    document.body.appendChild(div)
+    return div
+  })()
+
+  const overlayImg = overlay.querySelector('img') || (() => {
+    const img = document.createElement('img')
+    img.alt = '预览大图'
+    overlay.appendChild(img)
+    return img
+  })()
+
+  const overlayClose = overlay.querySelector('.img-preview-close') || (() => {
+    const btn = document.createElement('button')
+    btn.type = 'button'
+    btn.className = 'img-preview-close'
+    btn.textContent = 'X'
+    overlay.appendChild(btn)
+    return btn
+  })()
+
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) {
+      overlay.classList.remove('show')
+      overlayImg.src = ''
+    }
+  })
+
+  overlayClose.addEventListener('click', (e) => {
+    e.stopPropagation()
+    overlay.classList.remove('show')
+    overlayImg.src = ''
+  })
+
+  previewOverlay = overlay
+  previewImg = overlayImg
+  isPreviewInited = true
+}
+
+function showImagePreview(src) {
+  if (!isPreviewInited) initPreviewOverlay()
+  if (!previewOverlay || !previewImg) return
+  previewImg.src = src
+  previewOverlay.classList.add('show')
+}
+
 function start(result) {
   console.log("result=====>", result);
 
@@ -75,9 +152,8 @@ function addMessage(text, type = 'user', timestamp = null) {
           img.src = item
           img.width = 80
           img.onclick = () => {
-            console.log(item);
-            window.open(item, '_blank');
-          };
+            showImagePreview(item)
+          }
           userBox.appendChild(img)
         });
 
