@@ -10,6 +10,8 @@ function start(result) {
     case 2003:
       if (result.image_base64) {
         imgList.push(result.image_base64)
+        chatGUI(true)
+        addMessage('', 'user', result.timestamp);
       }
       break
     case 1004:
@@ -52,9 +54,13 @@ function addMessage(text, type = 'user', timestamp = null) {
   time.textContent = timestamp
     ? new Date(timestamp).toLocaleTimeString('zh-CN')
     : new Date().toLocaleTimeString('zh-CN');
+  console.log(!text, type == 'user', !imgList.length);
 
-  if (!text && type == 'user') return
+  if (!text && type == 'user' && !imgList.length) return
+
   if (type == 'user') {
+    console.log(11222);
+
     try {
       boxContent.textContent = null
       const userBox = document.createElement('div');
@@ -69,6 +75,7 @@ function addMessage(text, type = 'user', timestamp = null) {
           img.src = item
           img.width = 80
           img.onclick = () => {
+            console.log(item);
             window.open(item, '_blank');
           };
           userBox.appendChild(img)
