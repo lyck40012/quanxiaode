@@ -196,6 +196,15 @@ function addMessage(text, type = 'user', timestamp = null) {
     boxContent.appendChild(systemBox)
   }
 
+  scrollBoxContentToBottom(boxContent)
+}
+
+function scrollBoxContentToBottom(target) {
+  if (!target) return
+  // 新增内容后将滚动条置底，确保最新消息可见
+  requestAnimationFrame(() => {
+    target.scrollTop = target.scrollHeight
+  })
 }
 
 

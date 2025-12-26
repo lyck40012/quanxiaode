@@ -430,7 +430,7 @@ body {
 
 .m-box .box-content {
   width: 100%;
-  height: 400px;
+  height: 500px;
   display: flex;
   flex-direction: column;
   gap: 18px;
